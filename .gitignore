@@ -1,0 +1,8 @@
+build/
+node_modules/
+test/integration/screenshots-current
+.DS_Store
+.firebaserc
+firebase.json
+src/components/*.js.html
+src/components/*.bak.js

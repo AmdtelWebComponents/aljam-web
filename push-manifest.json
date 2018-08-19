@@ -1,0 +1,86 @@
+{
+  "/": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-home.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  },
+  "/home": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-home.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  },
+  "/music": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-music.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  },
+  "/art": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-art.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  },
+  "/about": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-about.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  },
+  "/contact": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-contact.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  }
+}
