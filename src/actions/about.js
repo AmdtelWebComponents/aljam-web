@@ -8,31 +8,15 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-export const GET_PICTURES = 'GET_PICTURES';
-export const CURRENT_PICTURE = 'CURRENT_PICTURE';
-export const TOGGLE_PICTURE = 'TOGGLE_PICTURE';
+export const GET_DISCOGRAPHY = 'GET_DISCOGRAPHY';
 
-export const getAllPictures = () => (dispatch, getState) => {
+export const getDiscography = () => (dispatch, getState) => {
   // Here you would normally get the data from the server. We're simulating
   // that by dispatching an async action (that you would dispatch when you
   // succesfully got the data back)
-  fetch('https://res.cloudinary.com/amdtel/image/list/paintings.json')
+  fetch('./albums.json')
     .then(r => r.json())
-    .then(data => dispatch({ type: GET_PICTURES, pictures: data.resources }))
+    .then(data => dispatch({ type: GET_DISCOGRAPHY, discography: data }))
     .catch(e => console.log("fetch error:", e));
 
-};
-
-export const changePicture = (pictureId) => (dispatch) => {
-  dispatch({type:TOGGLE_PICTURE});
-  dispatch({
-    type: CURRENT_PICTURE,
-    value: pictureId
-  }); 
-};
-
-export const togglePicture = () => {
-  return {
-    type: TOGGLE_PICTURE
-  };
 };

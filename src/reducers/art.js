@@ -8,9 +8,9 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { GET_PICTURES, CURRENT_PICTURE, TOGGLE_CHOOSER } from '../actions/art.js';
+import { GET_PICTURES, CURRENT_PICTURE, TOGGLE_PICTURE } from '../actions/art.js';
 
-const pictures = (state = {pictures: {}, value: "cowboy-nevada", chooser: false}, action) => {
+const pictures = (state = {pictures: [], value: "cowboy-nevada", chooser: true}, action) => {
   switch (action.type) {
     case GET_PICTURES:
       return {
@@ -22,7 +22,7 @@ const pictures = (state = {pictures: {}, value: "cowboy-nevada", chooser: false}
         ...state,
         value: action.value
       };
-    case TOGGLE_CHOOSER:
+    case TOGGLE_PICTURE:
       return {
         ...state,
         chooser: !state.chooser

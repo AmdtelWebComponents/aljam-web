@@ -8,28 +8,18 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { GET_ALBUMS, CURRENT_ALBUM, TOGGLE_CHOOSER } from '../actions/albums.js';
+import { GET_DISCOGRAPHY } from '../actions/about.js';
 
-const library = (state = {albums: [], value: "452840148", chooser: true}, action) => {
+const discography = (state = {discography: {'order':[]}}, action) => {
   switch (action.type) {
-    case GET_ALBUMS:
+    case GET_DISCOGRAPHY:
       return {
         ...state,
-        albums: action.albums
-      };
-    case CURRENT_ALBUM:
-      return {
-        ...state,
-        value: action.value
-      };
-    case TOGGLE_CHOOSER:
-      return {
-        ...state,
-        chooser: !state.chooser
+        discography: action.discography
       };
     default:
       return state;
   }
 };
 
-export default library;
+export default discography;

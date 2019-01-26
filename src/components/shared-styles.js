@@ -16,19 +16,10 @@ export const SharedStyles = html`
     display: block;
     box-sizing: border-box;
   }
-
+  
   section {
-    width: 100vw;
-	  height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--app-section-odd-color);
-  }
-
-  section:nth-of-type(even) {
-    background: var(--app-section-even-color);
+    display: grid;
+    min-height: 100vh;
   }
 
   h2 {
@@ -36,40 +27,21 @@ export const SharedStyles = html`
     text-align: center;
     color: var(--app-dark-text-color);
   }
+  
+  .btn {
+    display: block;
+    background-color: yellow;
+    text-decoration: none;
+  }
+  .btn:hover {
+    background-color: blue;
+    color: white;
+  }
 
   @media (min-width: 460px) {
     h2 {
       font-size: 36px;
     }
-  }
-  
-  .btn {
-    background: #3498db;
-    -webkit-border-radius: 28px;
-    -moz-border-radius: 28px;
-    border-radius: 28px;
-    font-family: Arial;
-    color: #ffffff;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    text-decoration: none;
-  }
-  .btn:hover {
-    background: #3cb0fd;
-    text-decoration: none;
-  }
-
-  .circle {
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin: 0 auto;
-    text-align: center;
-    border-radius: 50%;
-    background: var(--app-primary-color);
-    color: var(--app-light-text-color);
-    font-size: 30px;
-    line-height: 64px;
   }
 </style>
 `;

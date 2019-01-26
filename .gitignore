@@ -1,5 +1,6 @@
 build/
 node_modules/
+.firebase/
 test/integration/screenshots-current
 .DS_Store
 .firebaserc

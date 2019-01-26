@@ -13,11 +13,11 @@ export const CURRENT_ALBUM = 'CURRENT_ALBUM';
 export const TOGGLE_CHOOSER = 'TOGGLE_CHOOSER';
 
 const ALBUMS_LIST = [
-  {"id": "452840148", "title": "Album01", "description": "This is Album01"},
-  {"id": "81621713", "title": "Album02", "description": "This is Album02"},
-  {"id": "1942665", "title": "Album03", "description": "This is Album03"},
-  {"id": 4, "title": "Album04", "description": "This is Album04"},
-  {"id": 5, "title": "Album05", "description": "This is Album05"}
+  {"id": "452840148", "title": "Pillar Box Swing", "cover": "https://i1.sndcdn.com/artworks-000196900619-vm6nvs-t200x200.jpg"},
+  {"id": "661443837", "title": "Christmas Cheer", "cover": "https://i1.sndcdn.com/artworks-Tf9IeggAHa5c-0-t200x200.jpg"},
+  {"id": "53337986", "title": "Classical", "cover": "https://i1.sndcdn.com/artworks-000092720295-kjpq3h-t200x200.jpg"},
+  {"id": "197021389", "title": "Stella's Coffee House", "cover": "https://i1.sndcdn.com/artworks-000010549569-rupd6b-t200x200.jpg"},
+  {"id": "341735625", "title": "Best of Jazz Songs", "cover": "https://i1.sndcdn.com/artworks-000252256061-v177r7-t200x200.jpg"}
 ];
 
 export const getAllAlbums = () => (dispatch, getState) => {
@@ -26,14 +26,14 @@ export const getAllAlbums = () => (dispatch, getState) => {
   // succesfully got the data back)
 
   // You could reformat the data in the right format as well:
-  const albums = ALBUMS_LIST.reduce((obj, album) => {
-    obj[album.id] = album
-    return obj
-  }, {});
+  // const albums = ALBUMS_LIST.reduce((obj, album) => {
+  //   obj[album.id] = album
+  //   return obj
+  // }, {});
 
   dispatch({
     type: GET_ALBUMS,
-    albums: albums
+    albums: ALBUMS_LIST
   });
 };
 

@@ -31,35 +31,49 @@ ${SharedStyles}
     width: 100%;
     height: 450px;
   }
-
-  .aspectRatioSizer {
-    display: grid;
+  .albums {
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-items: center;
+    align-items: center;
+    padding: 1rem;
   }
-
-  .aspectRatioSizer>* {
-    grid-area: 1 / 1 / 2 / 2;
+  .albums div {
+    display: flex;
+    flex-direction: column;
+  }
+  .scwidget {
+    justify-items: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .chooserbtn {
+    width: 100%;
+    height: 50px;
   }
 </style>
-<div class="btn" on-click="${() => store.dispatch(toggleChooser())}">Music</div>
-<section>
-  <div class="aspectRatioSizer">
-    <svg viewBox="0 0 3 2"></svg>
-    <div hidden="${props._chooser}">
-      <div>
-        ${Object.keys(props._albums).map((key) => {
-          const item = props._albums[key];
-          return html`
-                <div>
-                  <button on-click="${(e) => store.dispatch(changeAlbum(e.currentTarget.dataset['index'])) }" data-index$="${item.id}" title="Play ${item.title}">
-                    ${item.title}
-                  </button>
-                </div>
-        `; })}
-      </div>
-    </div>
-  </div>
+
+${props._chooser
+?html`
+<section class="albums">
+  ${props._albums.map(
+  (item) => html`
+<div>
+  <img src="${item.cover}"></img>
+  <button on-click="${(e) => store.dispatch(changeAlbum(e.currentTarget.dataset['index'])) }" data-index$="${item.id}" title="Play ${item.title}">
+    ${item.title}
+  </button>
+</div>
+  `)}
+</section>`
+:html`
+<section class="scwidget">
+<button class="chooserbtn" on-click="${() => store.dispatch(toggleChooser())}">Albums</button>
 <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${props._currentAlbum}&amp;color=%23005500&amp;show_playcount=false"></iframe>
 </section>
+`}
+
 `;
     }
   static get properties(){

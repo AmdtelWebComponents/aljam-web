@@ -6,7 +6,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 
 // These are the actions needed by this element.
-import { getAllPictures, changePicture, toggleChooser } from '../actions/art.js';
+import { getAllPictures, changePicture, togglePicture } from '../actions/art.js';
 
 // We are lazy loading its reducer.
 import pictures from '../reducers/art.js';
@@ -14,68 +14,76 @@ store.addReducers({
   pictures
 });
 
-// These are the elements needed by this element.
-import './el-album-chooser.js';
-
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+import { closeIcon } from './aljam-icons';
 
 class AljamArt extends connect(store)(PageViewElement) {
-    _render(props) {
+    _render(props, url="https://res.cloudinary.com/amdtel/image/upload/") {
         return html `
 ${SharedStyles}
 <style>
-  #thumbnail {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+  .fullimg {
+    justify-items: center;
+    align-items: center;
   }
-  #thumbnail>img {
-    padding: 5px;
+  
+  .fullimg img{
+    max-width: 100vw;
+    max-height: 100vh;
   }
-  #mainimage {
-    width: 100%;
-    height: auto;
+  .portfolio {
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    justify-items: center;
+    align-items: center;
+    padding: 1rem;
   }
-  .aspectRatioSizer {
-  display: grid;
+  .portfolio img{
+    max-height: 75px;
   }
-  .aspectRatioSizer > * {
-    grid-area: 1 / 1 / 2 / 2;
+  .close {
+    position: fixed;
+    background: black;
+    top: 1rem;
+    right: 1rem;
+    fill: white;
+    cursor: pointer;
+    height: 44px;
+    width: 44px;
   }
 </style>
-<div class="btn">Art</div>
-<section>
-<div class="aspectRatioSizer">
-    <svg viewBox="0 0 3 2"></svg>
-    <div hidden="${props._chooser}">
-      <div>
-        ${Object.keys(props._pictures).map((key) => {
-            const item = props._pictures[key];
-            return html`
-              <img
-                src="https://res.cloudinary.com/amdtel/image/upload/t_media_lib_thumb/${item.public_id}.jpg"
-                on-click="${(e) => store.dispatch(changePicture(e.currentTarget.dataset['index'])) }"
-                data-index$="${item.public_id}">
-              </img>
-            `;
-          })}
-      </div>
-    </div>
-    <div hidden="${!props._chooser}">
-      <img
-        id="mainimage"
-        src="https://res.cloudinary.com/amdtel/image/upload/${props._currentPicture}.jpg"
-        on-click="${() => store.dispatch(toggleChooser())}">
-      </img>
-    </div>
-</div>
+
+${props._chooser
+?html`
+<section class="portfolio">
+    ${props._pictures.map(
+    (item) => html`
+          <picture>
+            <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
+            <img 
+              src="${url}t_media_lib_thumb/${item.public_id}.jpg"
+              on-click="${(e) => store.dispatch(changePicture(e.currentTarget.dataset['index'])) }"
+              data-index$="${item.public_id}">
+           </img>
+          </picture>
+            
+        `)}
 </section>
+`:html`
+<section class="fullimg">
+    <button class="close" on-click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
+    <picture>
+      <source srcset="${url}${props._currentPicture}.webp" type="image/webp">
+      <img src="${url}${props._currentPicture}.jpg"></img>
+    </picture>
+</section>   
+`}
 `;
     }
   static get properties(){
     return {
-      _pictures: Object,
+      _pictures: Array,
       _currentPicture: String,
       _chooser: Boolean
     };
