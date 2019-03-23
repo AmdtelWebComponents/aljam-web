@@ -13,11 +13,8 @@ export const CURRENT_ALBUM = 'CURRENT_ALBUM';
 export const TOGGLE_CHOOSER = 'TOGGLE_CHOOSER';
 
 const ALBUMS_LIST = [
-  {"id": "452840148", "title": "Pillar Box Swing", "cover": "https://i1.sndcdn.com/artworks-000196900619-vm6nvs-t200x200.jpg"},
-  {"id": "661443837", "title": "Christmas Cheer", "cover": "https://i1.sndcdn.com/artworks-Tf9IeggAHa5c-0-t200x200.jpg"},
-  {"id": "53337986", "title": "Classical", "cover": "https://i1.sndcdn.com/artworks-000092720295-kjpq3h-t200x200.jpg"},
-  {"id": "197021389", "title": "Stella's Coffee House", "cover": "https://i1.sndcdn.com/artworks-000010549569-rupd6b-t200x200.jpg"},
-  {"id": "341735625", "title": "Best of Jazz Songs", "cover": "https://i1.sndcdn.com/artworks-000252256061-v177r7-t200x200.jpg"}
+  {"id": "735089526", "title": "Gene Pool", "cover": "https://i1.sndcdn.com/artworks-000508190106-czeq61-t200x200.jpg"},
+  {"id": "734335461", "title": "Heart Strings", "cover": "https://i1.sndcdn.com/artworks-000507615510-jqqc3a-t200x200.jpg"}
 ];
 
 export const getAllAlbums = () => (dispatch, getState) => {

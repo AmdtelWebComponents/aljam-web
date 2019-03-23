@@ -14,9 +14,6 @@ store.addReducers({
   library
 });
 
-// These are the elements needed by this element.
-import './el-album-chooser.js';
-
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 

@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { GET_ALBUMS, CURRENT_ALBUM, TOGGLE_CHOOSER } from '../actions/albums.js';
 
-const library = (state = {albums: [], value: "452840148", chooser: true}, action) => {
+const library = (state = {albums: [], value: "735089526", chooser: true}, action) => {
   switch (action.type) {
     case GET_ALBUMS:
       return {
