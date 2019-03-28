@@ -23,15 +23,12 @@ class AljamAbout extends connect(store)(PageViewElement) {
 ${SharedStyles}
 <style>
   :host {
-    display: block;
     background-color: #ed5000;
   }
   section {
     min-height: 200px;
     background: black;
     color: white;
-    padding: 1rem;
-    grid-gap: 1rem;
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
       'album-detail album-detail album-cover-front album-cover-back'
@@ -71,36 +68,12 @@ ${SharedStyles}
     background-color: black;
   }
   
-  .modal-grid-wrapper {
-    display:grid;
-    padding: 1rem;
-    grid-gap: 1rem;
+  .modal {
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
-      'modal-album-cover-front modal-album-cover-back'
-      'modal-album-detail modal-album-detail';
-    min-height: 100%;
-  }
-  
-  .modal-album-cover {
-    align-self: center;
-    justify-self: center;
-  }
-  
-  .modal-front {
-    grid-area: modal-album-cover-front;
-  }
-  .modal-back {
-    grid-area: modal-album-cover-back;
-  }
-  
-  .modal-album-detail {
-    grid-area: modal-album-detail;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+      'album-cover-front album-cover-back'
+      'album-detail album-detail';
+    min-height: 100v;
   }
   
   
@@ -111,20 +84,20 @@ ${SharedStyles}
       'album-detail album-detail'
       'album-cover-front album-cover-back'
     }
-    .album-cover img {
+    .album-img {
       max-height: 150px;
     }
   }
   
   @media (max-width: 800px) {
-    .modal-grid-wrapper {
+    .modal {
       grid-template-columns: 1fr;
       grid-template-areas:
-        'modal-album-cover-front'
-        'modal-album-cover-back'
-        'modal-album-detail';
+        'album-cover-front'
+        'album-cover-back'
+        'album-detail';
     }
-    .modal-album-cover img {
+    .modal-img {
       max-width: 80vw;
     }
   }
@@ -145,29 +118,26 @@ this._discography.order.map(
         <h7>${this._discography[item].label} ${item}</h7>
     </header>
     <div class="album-cover front" on-click=${(e)=>{this._albumCover = this._discography[item];this._toggleCover=false;}}>
-      <img src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item}-front.jpg"></img>
+      <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item}-front.jpg"></img>
     </div>
     <div class="album-cover back">
-      <img src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item}-back.jpg"></img>
+      <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item}-back.jpg"></img>
     </div>
   </section>`)
 :html`<section><h3>Loading...</h3></section>`}
 
 <div id="modal-album" on-click=${()=>this._toggleCover=true} hidden=${this._toggleCover}>
-<div class="modal-grid-wrapper">
-  <div class="modal-album-cover modal-front">
-    <img src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-front.jpg"></img>
-  </div>
-  <div class="modal-album-cover modal-back">
-    <img src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-back.jpg"></img>
-  </div>
-  <div class="modal-album-detail">
-    <p>Title: ${this._albumCover.title}</p>
-    <p>Artist: ${this._albumCover.artist}</p>
-    <p>Label: ${this._albumCover.label}</p>
-    <p>Category: ${this._albumCover.cat}</p>
-  </div>
-</div>
+  <section class="modal">
+    <div class="album-cover front">
+      <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-front.jpg"></img>
+    </div>
+    <div class="album-cover back">
+      <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-back.jpg"></img>
+    </div>
+    <div class="album-detail">
+      <h3>${this._albumCover.artist} ${this._albumCover.title} ${this._albumCover.label} ${this._albumCover.cat}</h3>
+    </div>
+  </section>
 </div>
 `;
 

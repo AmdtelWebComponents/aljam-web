@@ -20,6 +20,8 @@ export const SharedStyles = html`
   section {
     display: grid;
     min-height: 100vh;
+    padding: 1rem;
+    grid-gap: 1rem;
   }
 
   h2 {
