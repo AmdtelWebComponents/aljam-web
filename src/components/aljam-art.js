@@ -23,62 +23,48 @@ class AljamArt extends connect(store)(PageViewElement) {
         return html `
 ${SharedStyles}
 <style>
-  .fullimg {
-    justify-items: center;
-    align-items: center;
-  }
-  
-  .fullimg img{
-    max-width: 100vw;
-    max-height: 100vh;
-  }
   .portfolio {
-    grid-gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    justify-items: center;
+  }
+  .art-detail {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    line-height: 0.5rem;
   }
-  .portfolio img{
-    max-height: 75px;
-  }
-  .close {
-    position: fixed;
-    background: black;
-    top: 1rem;
-    right: 1rem;
-    fill: white;
-    cursor: pointer;
-    height: 44px;
-    width: 44px;
+  .fullimg img{
+    max-width: 100%;
   }
 </style>
-
+${props._pictures.length > 0?
+html`
 ${props._chooser
 ?html`
 <section class="portfolio">
     ${props._pictures.map(
     (item) => html`
+    <div class="art-detail" on-click="${(e) => store.dispatch(changePicture(item.public_id))}">
           <picture>
             <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
             <img 
               src="${url}t_media_lib_thumb/${item.public_id}.jpg"
-              on-click="${(e) => store.dispatch(changePicture(e.currentTarget.dataset['index'])) }"
-              data-index$="${item.public_id}">
            </img>
           </picture>
-            
+          <h5>${item.context.custom.caption}</h5>
+    </div>
         `)}
 </section>
 `:html`
 <section class="fullimg">
-    <button class="close" on-click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
+    <button class="btn-close" on-click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
     <picture>
       <source srcset="${url}${props._currentPicture}.webp" type="image/webp">
       <img src="${url}${props._currentPicture}.jpg"></img>
     </picture>
 </section>   
-`}
+`}`
+:html`<section><h3>Loading...</h3></section>`}
+
 `;
     }
   static get properties(){

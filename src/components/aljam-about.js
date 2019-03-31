@@ -18,8 +18,8 @@ store.addReducers({
 import { SharedStyles } from './shared-styles.js';
 
 class AljamAbout extends connect(store)(PageViewElement) {
-  _render() {
-        return html `
+  _render(props) {
+        return html`
 ${SharedStyles}
 <style>
   :host {
@@ -56,7 +56,6 @@ ${SharedStyles}
   .back {
     grid-area: album-cover-back;
   }
-  
   #modal-album {
     position: fixed;
     top: 1rem;
@@ -67,7 +66,6 @@ ${SharedStyles}
     color: white;
     background-color: black;
   }
-  
   .modal {
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
@@ -75,8 +73,6 @@ ${SharedStyles}
       'album-detail album-detail';
     min-height: 100v;
   }
-  
-  
   @media (max-width: 459px) {
     section {
       grid-template-columns: repeat(2, 1fr);
@@ -88,7 +84,6 @@ ${SharedStyles}
       max-height: 150px;
     }
   }
-  
   @media (max-width: 800px) {
     .modal {
       grid-template-columns: 1fr;
@@ -103,29 +98,26 @@ ${SharedStyles}
   }
 </style>
 
+${props._discography.length > 0?
+props._discography.map(
+  (item) => html`
+<section>
+  <header class="album-detail">
+      <h1>${item.context.custom.year}</h1>
 
-${this._discography.order.length > 0?
-this._discography.order.map(
-  (item) => html
-  `<section>
-    <header class="album-detail">
-        <h1>${this._discography[item].year}</h1>
+      <h5>${item.context.custom.artist}</h5>
 
-        <h5>${this._discography[item].artist}</h5>
+      <h3>${item.context.custom.caption}</h3>
 
-        <h3>${this._discography[item].title}</h3>
-
-        <h7>${this._discography[item].label} ${item}</h7>
-    </header>
-    <div class="album-cover front" on-click=${(e)=>{this._albumCover = this._discography[item];this._toggleCover=false;}}>
-      <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item}-front.jpg"></img>
-    </div>
-    <div class="album-cover back">
-      <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item}-back.jpg"></img>
-    </div>
-  </section>`)
-:html`<section><h3>Loading...</h3></section>`}
-
+      <h7>${item.context.custom.label} ${item.context.custom.cat}</h7>
+  </header>
+  <div class="album-cover front" on-click=${(e)=>{this._albumCover = item.context.custom;this._toggleCover=false;}}>
+    <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/${item.public_id}.jpg"></img>
+  </div>
+  <div class="album-cover back">
+    <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item.context.custom.cat}-back.jpg"></img>
+  </div>
+</section>
 <div id="modal-album" on-click=${()=>this._toggleCover=true} hidden=${this._toggleCover}>
   <section class="modal">
     <div class="album-cover front">
@@ -135,13 +127,12 @@ this._discography.order.map(
       <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-back.jpg"></img>
     </div>
     <div class="album-detail">
-      <h3>${this._albumCover.artist} ${this._albumCover.title} ${this._albumCover.label} ${this._albumCover.cat}</h3>
+      <h3>${this._albumCover.artist} ${this._albumCover.caption} ${this._albumCover.label} ${this._albumCover.cat} ${this._albumCover.year}</h3>
     </div>
   </section>
-</div>
-`;
-
-  }
+</div>`)
+:html`<section><h3>Loading...</h3></section>`}
+`;}
   static get properties() {
     return {
       _discography: Object,
@@ -152,7 +143,7 @@ this._discography.order.map(
   
   constructor () {
     super();
-    this._albumCover = {artist:'',cat:'ST001',description:'',label:'',title:'',tracks:[],year:''};
+    this._albumCover = 'ST001';
     this._toggleCover = true;
   }
   
