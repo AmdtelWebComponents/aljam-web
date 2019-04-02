@@ -63,7 +63,11 @@ ${props._chooser
     </picture>
 </section>   
 `}`
-:html`<section><h3>Loading...</h3></section>`}
+:html`
+<div class="loader">
+  <img class="spinner" src="images/manifest/icon-144x144.png"></img>
+  <p>loading...</p>
+</div>`}
 
 `;
     }

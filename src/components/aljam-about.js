@@ -131,7 +131,11 @@ props._discography.map(
     </div>
   </section>
 </div>`)
-:html`<section><h3>Loading...</h3></section>`}
+:html`
+<div class="loader">
+  <img class="spinner" src="images/manifest/icon-144x144.png"></img>
+  <p>loading...</p>
+</div>`}
 `;}
   static get properties() {
     return {
