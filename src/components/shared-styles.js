@@ -20,12 +20,27 @@ export const SharedStyles = html`
   section {
     display: grid;
     min-height: 100vh;
+    padding: 1rem;
+    grid-gap: 1rem;
+    align-items: center;
+    justify-items: center;
   }
 
   h2 {
     font-size: 24px;
     text-align: center;
     color: var(--app-dark-text-color);
+  }
+  
+  .btn-close {
+    position: fixed;
+    background: black;
+    top: 1rem;
+    right: 1rem;
+    fill: white;
+    cursor: pointer;
+    height: 44px;
+    width: 44px;
   }
   
   .btn {
