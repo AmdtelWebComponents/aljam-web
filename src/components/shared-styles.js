@@ -42,21 +42,23 @@ export const SharedStyles = html`
     height: 44px;
     width: 44px;
   }
-  
-  .btn {
-    display: block;
-    background-color: yellow;
-    text-decoration: none;
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 144px;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -72px;
+    text-align: center;
   }
-  .btn:hover {
-    background-color: blue;
-    color: white;
+  .spinner {
+      -webkit-animation:spin 4s linear infinite;
+      -moz-animation:spin 4s linear infinite;
+      animation:spin 4s linear infinite;
   }
-
-  @media (min-width: 460px) {
-    h2 {
-      font-size: 36px;
-    }
-  }
+  @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+  @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+  @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 </style>
 `;
