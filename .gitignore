@@ -1,9 +1,6 @@
 build/
 node_modules/
-.firebase/
-test/integration/screenshots-current
+_site/
 .DS_Store
-.firebaserc
-firebase.json
-src/components/*.js.html
-src/components/*.bak.js
+server/
+test/
