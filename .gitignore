@@ -4,3 +4,4 @@ _site/
 .DS_Store
 server/
 test/
+package-lock.json

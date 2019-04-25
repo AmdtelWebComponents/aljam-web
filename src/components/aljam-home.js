@@ -1,11 +1,11 @@
-import { html } from '@polymer/lit-element';
+import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
 class AljamHome extends PageViewElement {
-    _render(props) {
+    render() {
         return html `
 ${SharedStyles}
 <style>

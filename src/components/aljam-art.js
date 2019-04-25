@@ -1,4 +1,4 @@
-import { html } from '@polymer/lit-element';
+import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -19,7 +19,14 @@ import { SharedStyles } from './shared-styles.js';
 import { closeIcon } from './aljam-icons';
 
 class AljamArt extends connect(store)(PageViewElement) {
-    _render(props, url="https://res.cloudinary.com/amdtel/image/upload/") {
+  static get properties(){
+    return {
+      _pictures: { type: Array },
+      _currentPicture: { type: String },
+      _chooser: { type: Boolean }
+    };
+  }
+    render(url="https://res.cloudinary.com/amdtel/image/upload/") {
         return html `
 ${SharedStyles}
 <style>
@@ -36,19 +43,17 @@ ${SharedStyles}
     max-width: 100%;
   }
 </style>
-${props._pictures.length > 0?
+${this._pictures.length > 0?
 html`
-${props._chooser
+${this._chooser
 ?html`
 <section class="portfolio">
-    ${props._pictures.map(
+    ${this._pictures.map(
     (item) => html`
-    <div class="art-detail" on-click="${(e) => store.dispatch(changePicture(item.public_id))}">
+    <div class="art-detail" @click="${(e) => store.dispatch(changePicture(item.public_id))}">
           <picture>
             <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
-            <img 
-              src="${url}t_media_lib_thumb/${item.public_id}.jpg"
-           </img>
+            <img src="${url}t_media_lib_thumb/${item.public_id}.jpg">
           </picture>
           <h5>${item.context.custom.caption}</h5>
     </div>
@@ -56,35 +61,29 @@ ${props._chooser
 </section>
 `:html`
 <section class="fullimg">
-    <button class="btn-close" on-click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
+    <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
     <picture>
-      <source srcset="${url}${props._currentPicture}.webp" type="image/webp">
-      <img src="${url}${props._currentPicture}.jpg"></img>
+      <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
+      <img src="${url}${this._currentPicture}.jpg">
     </picture>
 </section>   
 `}`
 :html`
 <div class="loader">
-  <img class="spinner" src="images/manifest/icon-144x144.png"></img>
+  <img class="spinner" src="images/manifest/icon-144x144.png">
   <p>loading...</p>
 </div>`}
 
 `;
     }
-  static get properties(){
-    return {
-      _pictures: Array,
-      _currentPicture: String,
-      _chooser: Boolean
-    };
-  }
   
-  _firstRendered() {
+  
+  firstUpdated() {
     store.dispatch(getAllPictures());
   }
   
   // This is called every time something is updated in the store.
-  _stateChanged(state) {
+  stateChanged(state) {
     this._pictures = state.pictures.pictures;
     this._currentPicture = state.pictures.value;
     this._chooser = state.pictures.chooser;

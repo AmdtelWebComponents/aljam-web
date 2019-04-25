@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html } from '@polymer/lit-element';
+import { LitElement, html } from 'lit-element';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
@@ -33,7 +33,17 @@ import { menuIcon } from './aljam-icons.js';
 import './snack-bar.js';
 
 class AljamApp extends connect(store)(LitElement) {
-  _render({appTitle, _page, _drawerOpened, _snackbarOpened, _offline}) {
+  static get properties() {
+    return {
+      appTitle: { type: String },
+      _page: { type: String },
+      _drawerOpened: { type: Boolean },
+      _snackbarOpened: { type: Boolean },
+      _offline: { type: Boolean }
+    };
+  }
+  render() {
+  
     // Anything that's related to rendering should be done in here.
     return html `
 <style>
@@ -111,48 +121,39 @@ class AljamApp extends connect(store)(LitElement) {
   }
 </style>
 
-<button class="menu-btn" title="Menu" on-click="${_ => store.dispatch(updateDrawerState(true))}">${menuIcon}</button>
+<button class="menu-btn" title="Menu" @click="${_ => store.dispatch(updateDrawerState(true))}">${menuIcon}</button>
 
 <!-- Drawer content -->
-<app-drawer opened="${_drawerOpened}"
-    on-opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
+<app-drawer
+    .opened="${this._drawerOpened}"
+    @opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
   <nav class="drawer-list">
-    <a selected?="${_page === 'home'}" href="/home">Home</a>
-    <a selected?="${_page === 'music'}" href="/music">Music</a>
-    <a selected?="${_page === 'art'}" href="/art">Art</a>
-    <a selected?="${_page === 'about'}" href="/about">About</a>
-    <a selected?="${_page === 'contact'}" href="/contact">Contact</a>
+    <a ?selected="${this._page === 'home'}" href="/home">Home</a>
+    <a ?selected="${this._page === 'music'}" href="/music">Music</a>
+    <a ?selected="${this._page === 'art'}" href="/art">Art</a>
+    <a ?selected="${this._page === 'about'}" href="/about">About</a>
+    <a ?selected="${this._page === 'contact'}" href="/contact">Contact</a>
   </nav>
 </app-drawer>
 
 <!-- Main content -->
 <main role="main" class="main-content">
-  <aljam-home class="page" active?="${_page === 'home'}"></aljam-home>
-  <aljam-music class="page" active?="${_page === 'music'}"></aljam-music>
-  <aljam-art class="page" active?="${_page === 'art'}"></aljam-art>
-  <aljam-about class="page" active?="${_page === 'about'}"></aljam-about>
-  <aljam-contact class="page" active?="${_page === 'contact'}"></aljam-contact>
-  <my-view404 class="page" active?="${_page === 'view404'}"></my-view404>
+  <aljam-home class="page" ?active="${this._page === 'home'}"></aljam-home>
+  <aljam-music class="page" ?active="${this._page === 'music'}"></aljam-music>
+  <aljam-art class="page" ?active="${this._page === 'art'}"></aljam-art>
+  <aljam-about class="page" ?active="${this._page === 'about'}"></aljam-about>
+  <aljam-contact class="page" ?active="${this._page === 'contact'}"></aljam-contact>
+  <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
 </main>
 
 <footer>
   <p>Made with &hearts; by the Amdtel Webdev team.</p>
 </footer>
 
-<snack-bar active?="${_snackbarOpened}">
-    You are now ${_offline ? 'offline' : 'online'}.</snack-bar>
+<snack-bar ?active="${this._snackbarOpened}">
+    You are now ${this._offline ? 'offline' : 'online'}.</snack-bar>
 `;
-  }
-
-  static get properties() {
-    return {
-      appTitle: String,
-      _page: String,
-      _drawerOpened: Boolean,
-      _snackbarOpened: Boolean,
-      _offline: Boolean
-    };
-  }
+}  
 
   constructor() {
     super();
@@ -161,16 +162,16 @@ class AljamApp extends connect(store)(LitElement) {
     setPassiveTouchGestures(true);
   }
 
-  _firstRendered() {
+  firstUpdated() {
     installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 460px)`,
         (matches) => store.dispatch(updateLayout(matches)));
   }
 
-  _didRender(properties, changeList) {
-    if ('_page' in changeList) {
-      const pageTitle = properties.appTitle + ' - ' + changeList._page;
+  updated(changedProps) {
+    if (changedProps.has('_page')) {
+      const pageTitle = this.appTitle + ' - ' + this._page;
       updateMetadata({
           title: pageTitle,
           description: pageTitle
@@ -179,7 +180,7 @@ class AljamApp extends connect(store)(LitElement) {
     }
   }
 
-  _stateChanged(state) {
+  stateChanged(state) {
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;

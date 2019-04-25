@@ -1,11 +1,11 @@
-import { html } from '@polymer/lit-element';
+import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
 class AljamContact extends PageViewElement {
-    _render(props) {
+    render() {
         return html `
 ${SharedStyles}
 <style>
@@ -23,20 +23,19 @@ ${SharedStyles}
     max-width: 100vw;
     max-height: 100vw;
   }
-  
   @media (max-width: 459px) {
     section {
       grid-template-columns: 1fr;
       grid-template-rows: 2fr 1fr;
     }
+  }
 </style>
 
 <section>
   <img src="./images/contact.jpeg"></img>
   <div>How to contact us...</div>
 </section>
-`;
-    }
+`;}
 }
 
 window.customElements.define('aljam-contact', AljamContact);

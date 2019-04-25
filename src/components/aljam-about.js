@@ -1,4 +1,4 @@
-import { html } from '@polymer/lit-element';
+import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -18,7 +18,15 @@ store.addReducers({
 import { SharedStyles } from './shared-styles.js';
 
 class AljamAbout extends connect(store)(PageViewElement) {
-  _render(props) {
+  static get properties() {
+    return {
+      _discography: { type: Object },
+      _albumCover: { type: Object },
+      _toggleCover: { type: Boolean }
+    };
+  }
+
+  render() {
         return html`
 ${SharedStyles}
 <style>
@@ -98,8 +106,8 @@ ${SharedStyles}
   }
 </style>
 
-${props._discography.length > 0?
-props._discography.map(
+${this._discography.length > 0?
+this._discography.map(
   (item) => html`
 <section>
   <header class="album-detail">
@@ -109,22 +117,22 @@ props._discography.map(
 
       <h3>${item.context.custom.caption}</h3>
 
-      <h7>${item.context.custom.label} ${item.context.custom.cat}</h7>
+      <h6>${item.context.custom.label} ${item.context.custom.cat}</h6>
   </header>
-  <div class="album-cover front" on-click=${(e)=>{this._albumCover = item.context.custom;this._toggleCover=false;}}>
-    <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/${item.public_id}.jpg"></img>
+  <div class="album-cover front" @click="${(e)=>{this._albumCover = item.context.custom;this._toggleCover=false;}}">
+    <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/${item.public_id}.jpg">
   </div>
   <div class="album-cover back">
-    <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item.context.custom.cat}-back.jpg"></img>
+    <img class="album-img" src="https://res.cloudinary.com/amdtel/image/upload/t_album200x200/albums/${item.context.custom.cat}-back.jpg">
   </div>
 </section>
-<div id="modal-album" on-click=${()=>this._toggleCover=true} hidden=${this._toggleCover}>
+<div id="modal-album" @click="${()=>this._toggleCover=true}" .hidden="${this._toggleCover}">
   <section class="modal">
     <div class="album-cover front">
-      <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-front.jpg"></img>
+      <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-front.jpg">
     </div>
     <div class="album-cover back">
-      <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-back.jpg"></img>
+      <img class="modal-img" src="https://res.cloudinary.com/amdtel/image/upload/albums/${this._albumCover.cat}-back.jpg">
     </div>
     <div class="album-detail">
       <h3>${this._albumCover.artist} ${this._albumCover.caption} ${this._albumCover.label} ${this._albumCover.cat} ${this._albumCover.year}</h3>
@@ -133,14 +141,14 @@ props._discography.map(
 </div>`)
 :html`
 <div class="loader">
-  <img class="spinner" src="images/manifest/icon-144x144.png"></img>
+  <img class="spinner" src="images/manifest/icon-144x144.png">
   <p>loading...</p>
 </div>`}
 `;}
   static get properties() {
     return {
-      _discography: Object,
-      _albumCover: Object,
+      _discography: { type: Object },
+      _albumCover: { type: Object },
       _toggleCover: Boolean
     };
   }
@@ -151,12 +159,12 @@ props._discography.map(
     this._toggleCover = true;
   }
   
-  _firstRendered() {
+  firstUpdated() {
     store.dispatch(getDiscography());
   }
   
   // This is called every time something is updated in the store.
-  _stateChanged(state)  {
+  stateChanged(state)  {
     this._discography = state.discography.discography;
   }
 }
