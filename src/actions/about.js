@@ -14,7 +14,7 @@ export const getDiscography = () => (dispatch, getState) => {
   // Here you would normally get the data from the server. We're simulating
   // that by dispatching an async action (that you would dispatch when you
   // succesfully got the data back)
-  fetch('https://res.cloudinary.com/amdtel/image/list/Album-Front.json')
+  fetch('https://res.cloudinary.com/aljames/image/list/Album-Front.json')
     .then(r => r.json())
     .then(data => data.resources.sort((a,b)=> b.context.custom.year.localeCompare(a.context.custom.year)))
     .then(data => dispatch({ type: GET_DISCOGRAPHY, discography: data }))
