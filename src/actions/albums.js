@@ -14,7 +14,8 @@ export const TOGGLE_CHOOSER = 'TOGGLE_CHOOSER';
 
 const ALBUMS_LIST = [
   {"id": "735089526", "title": "Gene Pool", "cover": "https://i1.sndcdn.com/artworks-000508190106-czeq61-t200x200.jpg"},
-  {"id": "734335461", "title": "Heart Strings", "cover": "https://i1.sndcdn.com/artworks-000507615510-jqqc3a-t200x200.jpg"}
+  {"id": "734335461", "title": "Heart Strings", "cover": "https://i1.sndcdn.com/artworks-000507615510-jqqc3a-t200x200.jpg"},
+  {"id": "764562717", "title": "In Other Worlds", "cover": "https://i1.sndcdn.com/artworks-000507733566-edxd49-t200x200.jpg"}
 ];
 
 export const getAllAlbums = () => (dispatch, getState) => {
