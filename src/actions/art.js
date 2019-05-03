@@ -20,7 +20,6 @@ export const getAllPictures = () => (dispatch, getState) => {
     .then(r => r.json())
     .then(data => dispatch({ type: GET_PICTURES, pictures: data.resources }))
     .catch(e => console.log("fetch error:", e));
-
 };
 
 export const changePicture = (pictureId) => (dispatch) => {

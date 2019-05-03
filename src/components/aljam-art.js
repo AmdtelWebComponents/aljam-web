@@ -26,58 +26,53 @@ class AljamArt extends connect(store)(PageViewElement) {
       _chooser: { type: Boolean }
     };
   }
-    render(url="https://res.cloudinary.com/amdtel/image/upload/") {
-        return html `
-${SharedStyles}
-<style>
-  .portfolio {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-  .art-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 0.5rem;
-  }
-  .fullimg img{
-    max-width: 100%;
-  }
-</style>
-${this._pictures.length > 0?
-html`
-${this._chooser
-?html`
-<section class="portfolio">
-    ${this._pictures.map(
-    (item) => html`
-    <div class="art-detail" @click="${(e) => store.dispatch(changePicture(item.public_id))}">
-          <picture>
-            <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
-            <img src="${url}t_media_lib_thumb/${item.public_id}.jpg">
-          </picture>
-          <h5>${item.context.custom.caption}</h5>
-    </div>
-        `)}
-</section>
-`:html`
-<section class="fullimg">
-    <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
-    <picture>
-      <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
-      <img src="${url}${this._currentPicture}.jpg">
-    </picture>
-</section>   
-`}`
-:html`
-<div class="loader">
-  <img class="spinner" src="images/manifest/icon-144x144.png">
-  <p>loading...</p>
-</div>`}
-
-`;
+  render(url="https://res.cloudinary.com/aljames/image/upload/") {
+    return html`
+      ${SharedStyles}
+      <style>
+        .portfolio {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+        .art-detail {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          line-height: 0.5rem;
+        }
+        .fullimg img{
+          max-width: 100%;
+        }
+      </style>
+      ${this._pictures.length > 0? html`
+        ${this._chooser ? html`
+          <section class="portfolio">
+            ${this._pictures.map((item) => html`
+              <div class="art-detail" @click="${(e) => store.dispatch(changePicture(item.public_id))}">
+                    <picture>
+                      <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
+                      <img src="${url}t_media_lib_thumb/${item.public_id}.jpg">
+                    </picture>
+                    <h5>${item.context.custom.caption}</h5>
+              </div>`)
+            }
+          </section>`
+          :html`
+            <section class="fullimg">
+                <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
+                <picture>
+                  <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
+                  <img src="${url}${this._currentPicture}.jpg">
+                </picture>
+            </section>`
+          }`
+      :html`
+        <div class="loader">
+          <img class="spinner" src="images/manifest/icon-144x144.png">
+          <p>loading...</p>
+        </div>`
+      }`;
     }
-  
-  
+
   firstUpdated() {
     store.dispatch(getAllPictures());
   }

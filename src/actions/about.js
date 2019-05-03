@@ -19,5 +19,4 @@ export const getDiscography = () => (dispatch, getState) => {
     .then(data => data.resources.sort((a,b)=> b.context.custom.year.localeCompare(a.context.custom.year)))
     .then(data => dispatch({ type: GET_DISCOGRAPHY, discography: data }))
     .catch(e => console.log("fetch error:", e));
-
 };
