@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { GET_PICTURES, CURRENT_PICTURE, TOGGLE_PICTURE } from '../actions/art.js';
 
-const pictures = (state = {pictures: [], value: "cowboy-nevada", chooser: true}, action) => {
+const pictures = (state = {pictures: [], value: "", chooser: false}, action) => {
   switch (action.type) {
     case GET_PICTURES:
       return {
