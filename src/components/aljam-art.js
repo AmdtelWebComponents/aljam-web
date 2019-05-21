@@ -39,12 +39,25 @@ class AljamArt extends connect(store)(PageViewElement) {
           align-items: center;
           line-height: 0.5rem;
         }
-        .fullimg img{
+        #modal-picture {
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          bottom: 0px;
+          width: 100vw;
+          overflow: auto;
+          color: white;
+          background-color: #000000ab;
+        }
+        .fullimg {
+          grid-template-columns: 1fr;
+        }
+        .fullimg img {
           max-width: 100%;
+          max-height: 90vh;
         }
       </style>
       ${this._pictures.length > 0? html`
-        ${this._chooser ? html`
           <section class="portfolio">
             ${this._pictures.map((item) => html`
               <div class="art-detail" @click="${(e) => store.dispatch(changePicture(item.public_id))}">
@@ -55,23 +68,26 @@ class AljamArt extends connect(store)(PageViewElement) {
                     <h5>${item.context.custom.caption}</h5>
               </div>`)
             }
-          </section>`
-          :html`
+          </section>
+        ${this._chooser ? html`
+          <div id="modal-picture">
+            <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
             <section class="fullimg">
-                <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
-                <picture>
-                  <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
-                  <img src="${url}${this._currentPicture}.jpg">
-                </picture>
-            </section>`
-          }`
+              <picture>
+                <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
+                <img src="${url}${this._currentPicture}.jpg">
+              </picture>
+            </section>
+          </div>`
+        :html``}`
       :html`
         <div class="loader">
           <img class="spinner" src="images/manifest/icon-144x144.png">
           <p>loading...</p>
         </div>`
-      }`;
-    }
+      }
+    `;
+  }
 
   firstUpdated() {
     store.dispatch(getAllPictures());

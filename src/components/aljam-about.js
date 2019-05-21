@@ -16,6 +16,7 @@ store.addReducers({
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+import { closeIcon } from './aljam-icons';
 
 class AljamAbout extends connect(store)(PageViewElement) {
   static get properties() {
@@ -25,7 +26,6 @@ class AljamAbout extends connect(store)(PageViewElement) {
       _toggleCover: { type: Boolean }
     };
   }
-
   render(url="https://res.cloudinary.com/aljames/image/upload/") {
     return html`
       ${SharedStyles}
@@ -41,7 +41,6 @@ class AljamAbout extends connect(store)(PageViewElement) {
           grid-template-areas:
             'album-detail album-detail album-cover-front album-cover-back'
         }
-        
         section:nth-of-type(even) {
           background: white;
           color: black;
@@ -66,20 +65,20 @@ class AljamAbout extends connect(store)(PageViewElement) {
         }
         #modal-album {
           position: fixed;
-          top: 1rem;
-          left: 1rem;
-          bottom: 1rem;
-          width: 98vw;
+          top: 0px;
+          left: 0px;
+          bottom: 0px;
+          width: 100vw;
           overflow: auto;
           color: white;
-          background-color: black;
         }
         .modal {
           grid-template-columns: repeat(2, 1fr);
           grid-template-areas:
             'album-cover-front album-cover-back'
             'album-detail album-detail';
-          min-height: 100v;
+          min-height: 100vh;
+          background: #000000ab;
         }
         @media (max-width: 459px) {
           section {
@@ -105,8 +104,8 @@ class AljamAbout extends connect(store)(PageViewElement) {
           }
         }
       </style>
-      ${this._discography.length > 0?
-        this._discography.map((item) => html`
+      ${this._discography.length > 0? html`
+        ${this._discography.map((item) => html`
           <section>
             <header class="album-detail">
                 <h1>${item.context.custom.year}</h1>
@@ -114,14 +113,18 @@ class AljamAbout extends connect(store)(PageViewElement) {
                 <h3>${item.context.custom.caption}</h3>
                 <h6>${item.context.custom.label} ${item.context.custom.cat}</h6>
             </header>
-            <div class="album-cover front" @click="${(e)=>{this._albumCover = item.context.custom;this._toggleCover=false;}}">
+            <div class="album-cover front" @click="${(e)=>{this._albumCover = item.context.custom;this._toggleCover=true;}}">
               <img class="album-img" src="${url}t_album200x200/${item.public_id}.jpg">
             </div>
             <div class="album-cover back">
               <img class="album-img" src="${url}t_album200x200/albums/${item.context.custom.cat}-back.jpg">
             </div>
           </section>
-          <div id="modal-album" @click="${()=>this._toggleCover=true}" .hidden="${this._toggleCover}">
+          `)
+        }
+        ${this._toggleCover ?html`
+          <div id="modal-album" @click="${()=>this._toggleCover=false}">
+          <button class="btn-close" @click="${() => this._toggleCover=false}">${closeIcon}</button>
             <section class="modal">
               <div class="album-cover front">
                 <img class="modal-img" src="${url}albums/${this._albumCover.cat}-front.jpg">
@@ -133,8 +136,9 @@ class AljamAbout extends connect(store)(PageViewElement) {
                 <h3>${this._albumCover.artist} ${this._albumCover.caption} ${this._albumCover.label} ${this._albumCover.cat} ${this._albumCover.year}</h3>
               </div>
             </section>
-          </div>`)
-        :html`
+          </div>`
+        :html``}`
+      :html`
         <div class="loader">
           <img class="spinner" src="images/manifest/icon-144x144.png">
           <p>loading...</p>
@@ -145,8 +149,7 @@ class AljamAbout extends connect(store)(PageViewElement) {
  
   constructor () {
     super();
-    this._albumCover = 'ST001';
-    this._toggleCover = true;
+    this._toggleCover = false;
   }
   
   firstUpdated() {
