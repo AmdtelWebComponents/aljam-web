@@ -16,11 +16,10 @@ export const getAllPictures = () => (dispatch, getState) => {
   // Here you would normally get the data from the server. We're simulating
   // that by dispatching an async action (that you would dispatch when you
   // succesfully got the data back)
-  fetch('https://res.cloudinary.com/amdtel/image/list/paintings.json')
+  fetch('https://res.cloudinary.com/aljames/image/list/paintings.json')
     .then(r => r.json())
     .then(data => dispatch({ type: GET_PICTURES, pictures: data.resources }))
     .catch(e => console.log("fetch error:", e));
-
 };
 
 export const changePicture = (pictureId) => (dispatch) => {
