@@ -6,7 +6,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 
 // These are the actions needed by this element.
-import { getAllPictures, changePicture, togglePicture } from '../actions/art.js';
+import { getAllPictures } from '../actions/art.js';
 
 // We are lazy loading its reducer.
 import pictures from '../reducers/art.js';
@@ -22,7 +22,7 @@ class AljamArt extends connect(store)(PageViewElement) {
   static get properties(){
     return {
       _pictures: { type: Array },
-      _currentPicture: { type: String },
+      _currentPicture: { type: Object },
       _chooser: { type: Boolean }
     };
   }
@@ -60,7 +60,7 @@ class AljamArt extends connect(store)(PageViewElement) {
       ${this._pictures.length > 0? html`
           <section class="portfolio">
             ${this._pictures.map((item) => html`
-              <div class="art-detail" @click="${(e) => store.dispatch(changePicture(item.public_id))}">
+              <div class="art-detail" @click="${(e) => {this._currentPicture = item;this._chooser=true}}">
                     <picture>
                       <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
                       <img src="${url}t_media_lib_thumb/${item.public_id}.jpg">
@@ -71,11 +71,11 @@ class AljamArt extends connect(store)(PageViewElement) {
           </section>
         ${this._chooser ? html`
           <div id="modal-picture">
-            <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
+            <button class="btn-close" @click="${() => this._chooser=false}">${closeIcon}</button>
             <section class="fullimg">
               <picture>
-                <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
-                <img src="${url}${this._currentPicture}.jpg">
+                <source srcset="${url}${this._currentPicture.public_id}.webp" type="image/webp">
+                <img src="${url}${this._currentPicture.public_id}.jpg">
               </picture>
             </section>
           </div>`
@@ -89,6 +89,11 @@ class AljamArt extends connect(store)(PageViewElement) {
     `;
   }
 
+  constructor() {
+    super();
+    this._chooser = false;
+  }
+
   firstUpdated() {
     store.dispatch(getAllPictures());
   }
@@ -96,8 +101,6 @@ class AljamArt extends connect(store)(PageViewElement) {
   // This is called every time something is updated in the store.
   stateChanged(state) {
     this._pictures = state.pictures.pictures;
-    this._currentPicture = state.pictures.value;
-    this._chooser = state.pictures.chooser;
   }
 }
 

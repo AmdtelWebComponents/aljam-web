@@ -21,7 +21,7 @@ import { closeIcon } from './aljam-icons';
 class AljamAbout extends connect(store)(PageViewElement) {
   static get properties() {
     return {
-      _discography: { type: Object },
+      _discography: { type: Array },
       _albumCover: { type: Object },
       _toggleCover: { type: Boolean }
     };
@@ -146,8 +146,8 @@ class AljamAbout extends connect(store)(PageViewElement) {
       }
     `;
   }
- 
-  constructor () {
+
+  constructor() {
     super();
     this._toggleCover = false;
   }
