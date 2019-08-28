@@ -1,28 +1,15 @@
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-
-// This element is connected to the Redux store.
-import { store } from '../store.js';
-
-// These are the actions needed by this element.
-import { getAllPictures, changePicture, togglePicture } from '../actions/art.js';
-
-// We are lazy loading its reducer.
-import pictures from '../reducers/art.js';
-store.addReducers({
-  pictures
-});
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 import { closeIcon } from './aljam-icons';
 
-class AljamArt extends connect(store)(PageViewElement) {
+class AljamArt extends PageViewElement {
   static get properties(){
     return {
       _pictures: { type: Array },
-      _currentPicture: { type: String },
+      _currentPicture: { type: Object },
       _chooser: { type: Boolean }
     };
   }
@@ -59,24 +46,27 @@ class AljamArt extends connect(store)(PageViewElement) {
       </style>
       ${this._pictures.length > 0? html`
           <section class="portfolio">
-            ${this._pictures.map((item) => html`
-              <div class="art-detail" @click="${(e) => store.dispatch(changePicture(item.public_id))}">
+            ${this._pictures.map((item, idx) => html`
+              <div class="art-detail" @click="${(e) => {this._currentPicture = idx;this._chooser=true}}">
                     <picture>
                       <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
                       <img src="${url}t_media_lib_thumb/${item.public_id}.jpg">
                     </picture>
-                    <h5>${item.context.custom.caption}</h5>
+                    <h5>${idx} ${item.context.custom.caption}</h5>
               </div>`)
             }
           </section>
         ${this._chooser ? html`
           <div id="modal-picture">
-            <button class="btn-close" @click="${() => store.dispatch(togglePicture())}">${closeIcon}</button>
+            <button class="btn-close" @click="${() => this._chooser=false}">${closeIcon}</button>
+            <button class="btn-previous" @click="${() => this._currentPicture==0?this._currentPicture=this._pictures.length-1:this._currentPicture--}">Previous</button>
+            <button class="btn-next" @click="${() => this._currentPicture==this._pictures.length-1?this._currentPicture=0:this._currentPicture++}">Next</button>
             <section class="fullimg">
               <picture>
-                <source srcset="${url}${this._currentPicture}.webp" type="image/webp">
-                <img src="${url}${this._currentPicture}.jpg">
+                <source srcset="${url}${this._pictures[this._currentPicture].public_id}.webp" type="image/webp">
+                <img src="${url}${this._pictures[this._currentPicture].public_id}.jpg">
               </picture>
+              
             </section>
           </div>`
         :html``}`
@@ -89,15 +79,22 @@ class AljamArt extends connect(store)(PageViewElement) {
     `;
   }
 
+  constructor() {
+    super();
+    this._chooser = false;
+    this._pictures = [];
+  }
+
   firstUpdated() {
-    store.dispatch(getAllPictures());
+    fetch('https://res.cloudinary.com/aljames/image/list/paintings.json')
+    .then(r => r.json())
+    .then(data => this._pictures = data.resources)
+    .catch(e => console.log("fetch error:", e));
   }
   
   // This is called every time something is updated in the store.
   stateChanged(state) {
     this._pictures = state.pictures.pictures;
-    this._currentPicture = state.pictures.value;
-    this._chooser = state.pictures.chooser;
   }
 }
 
