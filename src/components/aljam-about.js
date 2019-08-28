@@ -1,27 +1,14 @@
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-
-// This element is connected to the Redux store.
-import { store } from '../store.js';
-
-// These are the actions needed by this element.
-import { getDiscography } from '../actions/about.js';
-
-// We are lazy loading its reducer.
-import discography from '../reducers/about.js';
-store.addReducers({
-  discography
-});
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 import { closeIcon } from './aljam-icons';
 
-class AljamAbout extends connect(store)(PageViewElement) {
+class AljamAbout extends PageViewElement {
   static get properties() {
     return {
-      _discography: { type: Object },
+      _discography: { type: Array },
       _albumCover: { type: Object },
       _toggleCover: { type: Boolean }
     };
@@ -105,7 +92,7 @@ class AljamAbout extends connect(store)(PageViewElement) {
         }
       </style>
       ${this._discography.length > 0? html`
-        ${this._discography.map((item) => html`
+        ${this._discography.map((item, idx) => html`
           <section>
             <header class="album-detail">
                 <h1>${item.context.custom.year}</h1>
@@ -113,7 +100,7 @@ class AljamAbout extends connect(store)(PageViewElement) {
                 <h3>${item.context.custom.caption}</h3>
                 <h6>${item.context.custom.label} ${item.context.custom.cat}</h6>
             </header>
-            <div class="album-cover front" @click="${(e)=>{this._albumCover = item.context.custom;this._toggleCover=true;}}">
+            <div class="album-cover front" @click="${(e)=>{this._albumCover = idx;this._toggleCover=true;}}">
               <img class="album-img" src="${url}t_album200x200/${item.public_id}.jpg">
             </div>
             <div class="album-cover back">
@@ -123,17 +110,25 @@ class AljamAbout extends connect(store)(PageViewElement) {
           `)
         }
         ${this._toggleCover ?html`
-          <div id="modal-album" @click="${()=>this._toggleCover=false}">
+          <div id="modal-album">
           <button class="btn-close" @click="${() => this._toggleCover=false}">${closeIcon}</button>
+          <button class="btn-previous" @click="${() => this._albumCover==0?this._albumCover=this._discography.length-1:this._albumCover--}">Previous</button>
+          <button class="btn-next" @click="${() => this._albumCover==this._discography.length-1?this._albumCover=0:this._albumCover++}">Next</button>
             <section class="modal">
               <div class="album-cover front">
-                <img class="modal-img" src="${url}albums/${this._albumCover.cat}-front.jpg">
+                <img class="modal-img" src="${url}albums/${this._discography[this._albumCover].context.custom.cat}-front.jpg">
               </div>
               <div class="album-cover back">
-                <img class="modal-img" src="${url}albums/${this._albumCover.cat}-back.jpg">
+                <img class="modal-img" src="${url}albums/${this._discography[this._albumCover].context.custom.cat}-back.jpg">
               </div>
               <div class="album-detail">
-                <h3>${this._albumCover.artist} ${this._albumCover.caption} ${this._albumCover.label} ${this._albumCover.cat} ${this._albumCover.year}</h3>
+                <h3>
+                  ${this._discography[this._albumCover].context.custom.artist}
+                  ${this._discography[this._albumCover].context.custom.caption}
+                  ${this._discography[this._albumCover].context.custom.label}
+                  ${this._discography[this._albumCover].context.custom.cat} 
+                  ${this._discography[this._albumCover].context.custom.year}
+                </h3>
               </div>
             </section>
           </div>`
@@ -146,19 +141,19 @@ class AljamAbout extends connect(store)(PageViewElement) {
       }
     `;
   }
- 
-  constructor () {
+
+  constructor() {
     super();
     this._toggleCover = false;
+    this._discography = [];
   }
   
   firstUpdated() {
-    store.dispatch(getDiscography());
-  }
-  
-  // This is called every time something is updated in the store.
-  stateChanged(state)  {
-    this._discography = state.discography.discography;
+    fetch('https://res.cloudinary.com/aljames/image/list/Album-Front.json')
+    .then(r => r.json())
+    .then(data => data.resources.sort((a,b)=> b.context.custom.year.localeCompare(a.context.custom.year)))
+    .then(data => this._discography = data)
+    .catch(e => console.log("fetch error:", e));
   }
 }
 
