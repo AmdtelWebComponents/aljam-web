@@ -32,19 +32,28 @@ const loadPage = (page) => (dispatch) => {
       import('../components/aljam-home.js').then((module) => {
         // Put code in here that you want to run every time when
         // navigating to home after aljam-home.js is loaded.
+        window.scroll(0,0)
       });
       break;
     case 'music':
-      import('../components/aljam-music.js');
+      import('../components/aljam-music.js').then((module) => {
+        window.scroll(0,0)
+      });
       break;
     case 'art':
-      import('../components/aljam-art.js');
+      import('../components/aljam-art.js').then((module) => {
+        window.scroll(0,0)
+      });
       break;
     case 'about':
-      import('../components/aljam-about.js');
+      import('../components/aljam-about.js').then((module) => {
+        window.scroll(0,0)
+      });
       break;
     case 'contact':
-      import('../components/aljam-contact.js');
+      import('../components/aljam-contact.js').then((module) => {
+        window.scroll(0,0)
+      });
       break;
     default:
       page = 'view404';
