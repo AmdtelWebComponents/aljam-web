@@ -31,17 +31,34 @@ export const SharedStyles = html`
     text-align: center;
     color: var(--app-dark-text-color);
   }
-  
-  .btn-close {
+
+  button {
     position: fixed;
     background: black;
-    top: 1rem;
-    right: 1rem;
     fill: white;
+    color: white;
     cursor: pointer;
     height: 44px;
+  }
+  
+  .btn-close {
+    top: 1rem;
+    right: 1rem;
     width: 44px;
   }
+
+  .btn-next {
+    bottom: 1rem;
+    right: 1rem;
+    width: 88px;
+  }
+
+  .btn-previous {
+    bottom: 1rem;
+    left: 1rem;
+    width: 88px;
+  }
+
   .loader {
     position: absolute;
     top: 50%;
