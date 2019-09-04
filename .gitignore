@@ -1,9 +1,0 @@
-.gitignore
-build/
-node_modules/
-_site/
-.DS_Store
-server/
-test/
-package-lock.json
-.vscode/

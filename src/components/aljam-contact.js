@@ -5,7 +5,12 @@ import { PageViewElement } from './page-view-element.js';
 import { SharedStyles } from './shared-styles.js';
 
 class AljamContact extends PageViewElement {
-  render() {
+  static get properties() {
+    return {
+      _data: { type: Array },
+    };
+  }
+  render(url="https://res.cloudinary.com/aljames/image/upload/") {
     return html `
       ${SharedStyles}
       <style>
@@ -31,11 +36,33 @@ class AljamContact extends PageViewElement {
         }
       </style>
 
+    ${this._data.length > 0? html`
       <section>
-        <img src="./images/contact.jpeg"></img>
-        <div>How to contact us...</div>
-      </section>
-    `;
+        <img src="${url}${this._data[0].public_id}.jpeg">
+        <div>
+        <p>How to contact us...</p>
+        ${Object.keys(this._data[0].context.custom).map((key) => html`<p>${key}: ${this._data[0].context.custom[key] }</p>`)}
+        </div>
+      </section>`
+    : html`
+       <div class="loader">
+         <img class="spinner" src="images/manifest/icon-144x144.png">
+         <p>loading...</p>
+       </div>`
+    }`;
+  }
+
+  constructor() {
+    super();
+    this._data = [];
+    this._contactData = [];
+  }
+
+  firstUpdated() {
+    fetch('https://res.cloudinary.com/aljames/image/list/contact-image.json')
+    .then(r => r.json())
+    .then(data => this._data = data.resources)
+    .catch(e => console.log("fetch error:", e));
   }
 }
 
