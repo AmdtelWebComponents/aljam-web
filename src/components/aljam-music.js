@@ -1,31 +1,19 @@
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-
-// This element is connected to the Redux store.
-import { store } from '../store.js';
-
-// These are the actions needed by this element.
-import { getAllAlbums, changeAlbum, toggleChooser } from '../actions/albums.js';
-
-// We are lazy loading its reducer.
-import library from '../reducers/albums.js';
-store.addReducers({
-  library
-});
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+import { closeIcon } from './aljam-icons';
 
-class AljamMusic extends connect(store)(PageViewElement) {
-  static get properties(){
+class AljamMusic extends PageViewElement {
+  static get properties() {
     return {
-      _albums: { type: Object },
+      _data: { type: Array },
       _currentAlbum: { type: String },
       _chooser: { type: Boolean }
     };
   }
-  render() {
+  render(url="https://res.cloudinary.com/aljames/image/upload/") {
     return html`
       ${SharedStyles}
       <style>
@@ -42,9 +30,9 @@ class AljamMusic extends connect(store)(PageViewElement) {
           align-items: center;
           padding: 1rem;
         }
-        .albums div {
-          display: flex;
-          flex-direction: column;
+        .albums button {
+          position: unset;
+          height: unset;
         }
         .scwidget {
           justify-items: center;
@@ -53,40 +41,49 @@ class AljamMusic extends connect(store)(PageViewElement) {
         }
         
         .chooserbtn {
-          width: 100%;
-          height: 50px;
+          top: 1rem;
+          right: 1rem;
         }
       </style>
+      
+      ${this._data.length > 0? html`
       ${this._chooser ? html`
         <section class="albums">
-          ${this._albums.map(
+          ${this._data.map(
           (item) => html`
-        <div>
-          <img src="${item.cover}">
-          <button @click="${(e) => store.dispatch(changeAlbum(e.currentTarget.dataset['index'])) }" data-index="${item.id}" title="Play ${item.title}">
-            ${item.title}
+        <button @click="${(e) => {this._chooser=false; this._currentAlbum=item.context.custom.SCID} }" title="Play ${item.context.custom.caption}">
+          <img src="${url}t_album200x200/${item.public_id}">
+          <br>
+            ${item.context.custom.caption}
           </button>
-        </div>
           `)}
         </section>`
       :html`
         <section class="scwidget">
-          <button class="chooserbtn" @click="${() => store.dispatch(toggleChooser())}">Albums</button>
-          <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=false"></iframe>
-        </section>
-      `}
+          <button class="chooserbtn" @click="${() => this._chooser=true}">Return to Albums</button>
+          <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true&amp;visual=true"></iframe>
+        </section>`
+      }`
+      :html`
+        <div class="loader">
+          <img class="spinner" src="images/manifest/icon-144x144.png">
+          <p>loading...</p>
+        </div>`
+      }
     `;
   }
 
-  firstUpdated() {
-    store.dispatch(getAllAlbums());
+  constructor() {
+    super();
+    this._chooser = true;
+    this._data = [];
   }
-  
-  // This is called every time something is updated in the store.
-  stateChanged(state) {
-    this._albums = state.library.albums;
-    this._currentAlbum = state.library.value;
-    this._chooser = state.library.chooser;
+
+  firstUpdated() {
+    fetch('https://res.cloudinary.com/aljames/image/list/soundcloud.json')
+    .then(r => r.json())
+    .then(data => this._data = data.resources)
+    .catch(e => console.log("fetch error:", e));
   }
 }
 

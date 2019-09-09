@@ -52,7 +52,7 @@ class AljamArt extends PageViewElement {
                       <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
                       <img src="${url}t_media_lib_thumb/${item.public_id}.jpg">
                     </picture>
-                    <h5>${idx} ${item.context.custom.caption}</h5>
+                    <h5>${item.context.custom.caption}</h5>
               </div>`)
             }
           </section>
