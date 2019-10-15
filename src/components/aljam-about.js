@@ -20,8 +20,14 @@ class AljamAbout extends PageViewElement {
         :host {
           background-color: #ed5000;
         }
+        .wrapper {
+          display: grid;
+          height: 80vh;
+          overflow-y: auto;
+          grid-template-columns: 1fr 3fr;
+        }
         section {
-          min-height: 200px;
+          height: 300px;
           background: black;
           color: white;
           grid-template-columns: repeat(4, 1fr);
@@ -31,6 +37,15 @@ class AljamAbout extends PageViewElement {
         section:nth-of-type(even) {
           background: white;
           color: black;
+        }
+        .info-text {
+          padding: 10px;
+          background-color: black;
+          color: red;
+          font-size: 2vw;
+        }
+        .album-list {
+          overflow-y: scroll;
         }
         .album-detail {
           grid-area: album-detail;
@@ -92,7 +107,15 @@ class AljamAbout extends PageViewElement {
         }
       </style>
       ${this._discography.length > 0? html`
+      <div class="wrapper">
+      <div class="info-text">
+        <h3>discography</h3>
+        <p>This is my ever expanding compendium of albums that I have performed on, recorded or produced.</p>
+        <p>I could tell you a tale about the many great creative people who I have been lucky enough to share the stage with... </p>
+      </div>
+        <div class="album-list">
         ${this._discography.map((item, idx) => html`
+        
           <section>
             <header class="album-detail">
                 <h1>${item.context.custom.year}</h1>
@@ -104,11 +127,13 @@ class AljamAbout extends PageViewElement {
               <img class="album-img" src="${url}t_album200x200/${item.public_id}.jpg">
             </div>
             <div class="album-cover back">
-              <img class="album-img" src="${url}t_album200x200/albums/${item.context.custom.cat}-back.jpg">
+              <img class="album-img" src="${url}t_album200x200/discography/${item.context.custom.cat}-back.jpg">
             </div>
           </section>
-          `)
+         `)
         }
+        </div>
+      </div>
         ${this._toggleCover ?html`
           <div id="modal-album">
           <button class="btn-close" @click="${() => this._toggleCover=false}">${closeIcon}</button>
@@ -116,10 +141,10 @@ class AljamAbout extends PageViewElement {
           <button class="btn-next" @click="${() => this._albumCover==this._discography.length-1?this._albumCover=0:this._albumCover++}">Next</button>
             <section class="modal">
               <div class="album-cover front">
-                <img class="modal-img" src="${url}albums/${this._discography[this._albumCover].context.custom.cat}-front.jpg">
+                <img class="modal-img" src="${url}discography/${this._discography[this._albumCover].context.custom.cat}-front.jpg">
               </div>
               <div class="album-cover back">
-                <img class="modal-img" src="${url}albums/${this._discography[this._albumCover].context.custom.cat}-back.jpg">
+                <img class="modal-img" src="${url}discography/${this._discography[this._albumCover].context.custom.cat}-back.jpg">
               </div>
               <div class="album-detail">
                 <h3>
@@ -135,7 +160,7 @@ class AljamAbout extends PageViewElement {
         :html``}`
       :html`
         <div class="loader">
-          <img class="spinner" src="images/manifest/icon-144x144.png">
+          <img class="spinner" src="${url}home/logo-transparent.png">
           <p>loading...</p>
         </div>`
       }

@@ -15,13 +15,12 @@ export const SharedStyles = html`
   :host {
     display: block;
     box-sizing: border-box;
+    background: #000000;
   }
   
   section {
     display: grid;
-    min-height: 100vh;
-    padding: 1rem;
-    grid-gap: 1rem;
+    height: 80vh;
     align-items: center;
     justify-items: center;
   }
@@ -60,6 +59,7 @@ export const SharedStyles = html`
   }
 
   .loader {
+    color: #f1c232;
     position: absolute;
     top: 50%;
     left: 50%;

@@ -29,6 +29,9 @@ import {
 
 // These are the elements needed by this element.
 import '@polymer/app-layout/app-drawer/app-drawer.js';
+import '@polymer/app-layout/app-header/app-header.js';
+import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import { menuIcon } from './aljam-icons.js';
 import './snack-bar.js';
 
@@ -58,9 +61,54 @@ class AljamApp extends connect(store)(LitElement) {
           --app-section-even-color: #f7f7f7;
           --app-section-odd-color: white;
 
+          --app-header-background-color: black;
+          --app-header-text-color: var(--app-dark-text-color);
+          --app-header-selected-color: var(--app-primary-color);
+
           --app-drawer-background-color: var(--app-secondary-color);
           --app-drawer-text-color: var(--app-light-text-color);
           --app-drawer-selected-color: #78909C;
+        }
+
+        app-header {
+          height: 20vh;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          text-align: center;
+          background-color: var(--app-header-background-color);
+          color: var(--app-header-text-color);
+        }
+        .toolbar-top {
+          height: 20vh;
+          background-color: var(--app-header-background-color);
+        }
+        [main-title] {
+          font-family: 'Caveat';
+          color: #f1c232;
+          font-size: 5vw;
+          text-decoration: none;
+          pointer-events: auto;
+          /* In the narrow layout, the toolbar is offset by the width of the
+          drawer button, and the text looks not centered. Add a padding to
+          match that button */
+          padding-right: 44px;
+        }
+        .toolbar-list {
+          display: none;
+          font-size: 2vw;
+        }
+        .toolbar-list > a {
+          display: inline-block;
+          color: var(--app-header-text-color);
+          text-decoration: none;
+          line-height: 30px;
+          padding: 4px 24px;
+        }
+        .toolbar-list > a[selected] {
+          font-size: larger;
+          border-bottom: 4px solid;
         }
 
         .menu-btn {
@@ -86,13 +134,13 @@ class AljamApp extends connect(store)(LitElement) {
         .drawer-list>a {
           display: block;
           text-decoration: none;
-          color: var(--app-drawer-text-color);
-          line-height: 40px;
+          line-height: 60px;
           padding: 0 24px;
         }
 
         .drawer-list>a[selected] {
-          color: var(--app-drawer-selected-color);
+          font-size: larger;
+          border-left: 4px solid;
         }
 
         /* Workaround for IE11 displaying <main> as inline */
@@ -102,7 +150,8 @@ class AljamApp extends connect(store)(LitElement) {
         }
 
         .main-content {
-          min-height: 100vh;
+          height: 80vh;
+          padding-top: 20vh;
         }
 
         .page {
@@ -119,20 +168,58 @@ class AljamApp extends connect(store)(LitElement) {
           color: var(--app-drawer-text-color);
           text-align: center;
         }
+
+        /* Wide layout: when the viewport width is bigger than 460px, layout
+        changes to a wide layout */
+        @media (min-width: 460px) {
+          .toolbar-list {
+            display: block;
+          }
+          .menu-btn {
+            display: none;
+          }
+          .main-content {
+            padding-top: 20vh;
+          }
+          /* The drawer button isn't shown in the wide layout, so we don't
+          need to offset the title */
+          [main-title] {
+            padding-right: 0px;
+          }
+        }
       </style>
 
-      <button class="menu-btn" title="Menu" @click="${_ => store.dispatch(updateDrawerState(true))}">${menuIcon}</button>
+      <!-- Header -->
+      <app-header reveals>
+        <app-toolbar class="toolbar-top">
+          <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
+          <a main-title href="/home">${this.appTitle}</a>
+          <!-- This gets hidden on a small screen-->
+        <nav class="toolbar-list">
+          <a style="color: #ff0000;" ?selected="${this._page === 'about'}" href="/about">discography</a>
+          <a style="color: #00ff00;" ?selected="${this._page === 'music'}" href="/music">music</a>
+          <a style="color: #4a86e8;" ?selected="${this._page === 'art'}" href="/art">gallery</a>
+          <a style="color: #9900ff;" ?selected="${this._page === 'contact'}" href="/contact">contact</a>
+          <a style="color: #ff9900;" ?selected="${this._page === 'snaps'}" href="/snaps">snaps</a>
+          <a style="color: #f1c232;" ?selected="${this._page === 'links'}" href="/links">links</a>
+        </nav>
+        </app-toolbar>
+        
+      </app-header>
+
+      
 
       <!-- Drawer content -->
       <app-drawer
           .opened="${this._drawerOpened}"
-          @opened-changed="${e => store.dispatch(updateDrawerState(e.target.opened))}">
+          @opened-changed="${this._drawerOpenedChanged}">
         <nav class="drawer-list">
-          <a ?selected="${this._page === 'home'}" href="/home">Home</a>
-          <a ?selected="${this._page === 'music'}" href="/music">Music</a>
-          <a ?selected="${this._page === 'art'}" href="/art">Art</a>
-          <a ?selected="${this._page === 'about'}" href="/about">About</a>
-          <a ?selected="${this._page === 'contact'}" href="/contact">Contact</a>
+          <a style="color: #ff0000;" ?selected="${this._page === 'about'}" href="/about">discography</a>
+          <a style="color: #00ff00;" ?selected="${this._page === 'music'}" href="/music">music</a>
+          <a style="color: #4a86e8;" ?selected="${this._page === 'art'}" href="/art">gallery</a>
+          <a style="color: #9900ff;" ?selected="${this._page === 'contact'}" href="/contact">Contact</a>
+          <a style="color: #ff9900;" ?selected="${this._page === 'snaps'}" href="/snaps">snaps</a>
+          <a style="color: #f1c232;" ?selected="${this._page === 'links'}" href="/links">links</a>
         </nav>
       </app-drawer>
 
@@ -143,12 +230,13 @@ class AljamApp extends connect(store)(LitElement) {
         <aljam-art class="page" ?active="${this._page === 'art'}"></aljam-art>
         <aljam-about class="page" ?active="${this._page === 'about'}"></aljam-about>
         <aljam-contact class="page" ?active="${this._page === 'contact'}"></aljam-contact>
+        <aljam-snaps class="page" ?active="${this._page === 'snaps'}"></aljam-snaps>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
 
-      <footer>
+      <!-- <footer>
         <p>Made with &hearts; by the Amdtel Webdev team.</p>
-      </footer>
+      </footer> -->
       <snack-bar ?active="${this._snackbarOpened}">You are now ${this._offline ? 'offline' : 'online'}.</snack-bar>
     `;
   }  
@@ -176,6 +264,14 @@ class AljamApp extends connect(store)(LitElement) {
           // This object also takes an image property, that points to an img src.
       });
     }
+  }
+
+  _menuButtonClicked() {
+    store.dispatch(updateDrawerState(true));
+  }
+
+  _drawerOpenedChanged(e) {
+    store.dispatch(updateDrawerState(e.target.opened));
   }
 
   stateChanged(state) {
