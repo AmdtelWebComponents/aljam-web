@@ -55,6 +55,11 @@ const loadPage = (page) => (dispatch) => {
         window.scroll(0,0)
       });
       break;
+    case 'snaps':
+      import('../components/aljam-snaps.js').then((module) => {
+        window.scroll(0,0)
+      });
+      break;
     default:
       page = 'view404';
       import('../components/my-view404.js');

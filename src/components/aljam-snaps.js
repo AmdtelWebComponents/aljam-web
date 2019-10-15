@@ -5,7 +5,7 @@ import { PageViewElement } from './page-view-element.js';
 import { SharedStyles } from './shared-styles.js';
 import { closeIcon } from './aljam-icons';
 
-class AljamArt extends PageViewElement {
+class AljamSnaps extends PageViewElement {
   static get properties(){
     return {
       _pictures: { type: Array },
@@ -69,14 +69,11 @@ class AljamArt extends PageViewElement {
       ${this._pictures.length > 0? html`
         <section class="gallery">
           <div class="main-view">
-            <div>
-              <h3>${this._pictures[this._currentPicture].context.custom.caption}</h3>
-              <p>${this._pictures[this._currentPicture].context.custom.alt}</p>
-            </div>
-            <picture>
-              <source srcset="${url}${this._pictures[this._currentPicture].public_id}.webp" type="image/webp">
-              <img class="mainimg" src="${url}${this._pictures[this._currentPicture].public_id}.jpg">
-            </picture>
+          <p>Display some text here....</p>
+          <picture>
+            <source srcset="${url}${this._pictures[this._currentPicture].public_id}.webp" type="image/webp">
+            <img class="mainimg" src="${url}${this._pictures[this._currentPicture].public_id}.jpg">
+          </picture>
           </div>
           <div class="hs full" >
             ${this._pictures.map((item, idx) => html`
@@ -105,11 +102,11 @@ class AljamArt extends PageViewElement {
   }
 
   firstUpdated() {
-    fetch('https://res.cloudinary.com/aljames/image/list/gallery.json')
+    fetch('https://res.cloudinary.com/aljames/image/list/snaps-img.json')
     .then(r => r.json())
     .then(data => this._pictures = data.resources)
     .catch(e => console.log("fetch error:", e));
   }
 }
 
-window.customElements.define('aljam-art', AljamArt);
+window.customElements.define('aljam-snaps', AljamSnaps);

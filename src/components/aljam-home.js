@@ -5,7 +5,13 @@ import { PageViewElement } from './page-view-element.js';
 import { SharedStyles } from './shared-styles.js';
 
 class AljamHome extends PageViewElement {
-  render() {
+  static get properties() {
+    return {
+      _data: { type: Array }
+    };
+  }
+
+  render(url="https://res.cloudinary.com/aljames/image/upload/") {
     return html`
       ${SharedStyles}
       <style>
@@ -15,14 +21,14 @@ class AljamHome extends PageViewElement {
         }
 
         section {
-          background-position: center;
-          background-repeat: no-repeat;
-          background-color: black;
-          background-image: url(../images/telecaster.jpg);
-          background-size: cover;
           grid-gap: 1rem;
-          grid-template-columns: repeat(2, 1fr);
-          grid-template-rows: repeat(2, 1fr);
+          grid-template-columns: 1fr 3fr;
+          font-size: 2vw;
+          height: 80vh;
+        }
+
+        section .main-img {
+          height: 60vh;
         }
 
         .caption {
@@ -58,14 +64,74 @@ class AljamHome extends PageViewElement {
           --iron-icon-fill-color: blue;
         }
       </style>
-
-      <section id="main">
-        <a class="caption" href="/music"><p>Music...</p></a>
-        <a class="caption" href="/art"><p>Art...</p></a>
-        <a class="caption" href="/about"><p>About...</p></a>
-        <a class="caption" href="/contact"><p>contact...</p></a>
-      </section>
+      ${this._data.length > 0? html`
+        <section id="main">
+          <img style="height: 20vw" src="${url}/home/home-section-logo.jpg">
+          <img class="main-img" src="${url}/${this._data[0].public_id}.jpg">
+        </section>
+        <section id="discography" style="color: #ff0000">
+          <div>
+            <h3>${this._data[1].context.custom.caption}</h3>
+            <p>${this._data[1].context.custom.alt}</p>
+          </div>
+          <img class="main-img" src="${url}/${this._data[1].public_id}.jpg">
+        </section>
+        <section id="music" style="color: #00ff00">
+          <div>
+            <h3>${this._data[2].context.custom.caption}</h3>
+            <p>${this._data[2].context.custom.alt}</p>
+          </div>
+          <img class="main-img" src="${url}/${this._data[2].public_id}.jpg">
+        </section>
+        <section id="gallery" style="color: #4a86e8">
+          <div>
+            <h3>${this._data[3].context.custom.caption}</h3>
+            <p>${this._data[3].context.custom.alt}</p>
+          </div>
+          <img class="main-img" src="${url}/${this._data[3].public_id}.jpg">
+        </section>
+        <section id="contact" style="color: #9900ff">
+          <div>
+            <h3>${this._data[4].context.custom.caption}</h3>
+            <p>${this._data[4].context.custom.alt}</p>
+            <p>${this._data[4].context.custom.email}</p>
+          </div>
+          <img class="main-img" src="${url}/${this._data[4].public_id}.jpg">
+        </section>
+        <section id="snaps" style="color: #ff9900">
+          <div>
+            <h3>${this._data[5].context.custom.caption}</h3>
+            <p>${this._data[5].context.custom.alt}</p>
+          </div>
+          <img class="main-img" src="${url}/${this._data[5].public_id}.jpg">
+        </section>
+        <section id="links" style="color: #f1c232">
+          <div>
+            <h3>${this._data[6].context.custom.caption}</h3>
+            <p>${this._data[6].context.custom.alt}</p>
+          </div>
+          <img class="main-img" src="${url}/${this._data[6].public_id}.jpg">
+        </section>`
+      :html`
+        <div class="loader">
+          <img class="spinner" src="${url}home/logo-transparent.png">
+          <p>loading...</p>
+        </div>`
+      }
     `;
+  }
+
+  constructor() {
+    super();
+    this._data = [];
+  }
+
+  firstUpdated() {
+    fetch('https://res.cloudinary.com/aljames/image/list/home-section.json')
+    .then(r => r.json())
+    .then(data => data.resources.sort((a,b)=> a.context.custom.order.localeCompare(b.context.custom.order)))
+    .then(data => this._data = data)
+    .catch(e => console.log("fetch error:", e));
   }
 }
 
