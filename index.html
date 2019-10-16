@@ -82,31 +82,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
+      /* caveat-regular - latin */
       @font-face {
-        font-family: 'Pacifico';
+        font-family: 'Caveat';
         font-style: normal;
         font-weight: 400;
-        src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2) format('woff2');
-        /* THe browser draws the text immediately in the fallback font if the font
-           isn't loaded, then swaps it with the webfont when it eventually loads
-           See: https://developers.google.com/web/updates/2016/02/font-display
-        */
-        font-display: swap;
+        src: url('../fonts/caveat-v7-latin-regular.eot'); /* IE9 Compat Modes */
+        src: local('Caveat Regular'), local('Caveat-Regular'),
+            url('../fonts/caveat-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('../fonts/caveat-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('../fonts/caveat-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
+            url('../fonts/caveat-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('../fonts/caveat-v7-latin-regular.svg#Caveat') format('svg'); /* Legacy iOS */
       }
       body {
         margin: 0;
+        background-color: black;
         /* This is a font-stack that tries to use the system-default sans-serifs first */
-        font-family: Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        font-family: Caveat,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         line-height: 1.5;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
       }
       .loader {
+        color: #f1c232;
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 144px;
-        height: 200px;
         margin-top: -100px;
         margin-left: -72px;
         text-align: center;
@@ -122,10 +124,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     </style>
   </head>
-  <body>      
+  <body>
     <aljam-app appTitle="Al James">
       <div class="loader">
-        <img class="spinner" src="images/manifest/icon-144x144.png"></img>
+        <img style="height:200px" class="spinner" src="https://res.cloudinary.com/aljames/image/upload/home/logo-transparent.png"></img>
         <p>loading...</p>
       </div>
     <noscript>

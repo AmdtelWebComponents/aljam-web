@@ -4,7 +4,7 @@ import { PageViewElement } from './page-view-element.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-class AljamContact extends PageViewElement {
+class AljamLinks extends PageViewElement {
   static get properties() {
     return {
       _data: { type: Array },
@@ -20,14 +20,13 @@ class AljamContact extends PageViewElement {
         }
         section {
           grid-gap: 1rem;
-          grid-template-columns: 1fr 3fr;
-          justify-items: right;
+          grid-template-columns: 2fr 1fr;
+          justify-items: center;
           align-items: center;
-          font-size: 3vw;
         }
         section img {
-          max-width: 60vw;
-          max-height: 80vh;
+          max-width: 100vw;
+          max-height: 100vw;
         }
         @media (max-width: 459px) {
           section {
@@ -39,12 +38,11 @@ class AljamContact extends PageViewElement {
 
     ${this._data.length > 0? html`
       <section>
-        <div>
-          <h3>${this._data[0].context.custom.caption}</h3>
-          <p>${this._data[0].context.custom.alt}</p>
-          <p>${this._data[0].context.custom.email}</p>
-        </div>
         <img src="${url}${this._data[0].public_id}.jpeg">
+        <div>
+        <p>How to contact us...</p>
+        ${Object.keys(this._data[0].context.custom).map((key) => html`<p>${key}: ${this._data[0].context.custom[key] }</p>`)}
+        </div>
       </section>`
     : html`
        <div class="loader">
@@ -68,4 +66,4 @@ class AljamContact extends PageViewElement {
   }
 }
 
-window.customElements.define('aljam-contact', AljamContact);
+window.customElements.define('aljam-links', AljamLinks);

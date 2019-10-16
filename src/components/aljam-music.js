@@ -24,11 +24,7 @@ class AljamMusic extends PageViewElement {
           height: 450px;
         }
         .albums {
-          grid-gap: 20px;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          justify-items: center;
-          align-items: center;
-          padding: 1rem;
         }
         .albums button {
           position: unset;
@@ -61,7 +57,7 @@ class AljamMusic extends PageViewElement {
       :html`
         <section class="scwidget">
           <button class="chooserbtn" @click="${() => this._chooser=true}">Return to Albums</button>
-          <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true&amp;visual=true"></iframe>
+          <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true"></iframe>
         </section>`
       }`
       :html`

@@ -82,5 +82,19 @@
       "type": "script",
       "weight": 1
     }
+  },
+  "/snaps": {
+    "src/components/aljam-app.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/aljam-snaps.js": {
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
   }
 }
