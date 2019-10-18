@@ -21,9 +21,11 @@ class AljamContact extends PageViewElement {
         section {
           grid-gap: 1rem;
           grid-template-columns: 1fr 3fr;
-          justify-items: right;
-          align-items: center;
           font-size: 3vw;
+          color: #9900ff;
+        }
+        section div {
+          text-align: center;
         }
         section img {
           max-width: 60vw;

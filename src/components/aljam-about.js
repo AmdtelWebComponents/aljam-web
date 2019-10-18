@@ -43,6 +43,7 @@ class AljamAbout extends PageViewElement {
           background-color: black;
           color: red;
           font-size: 2vw;
+          text-align: center;
         }
         .album-list {
           overflow-y: scroll;
@@ -54,6 +55,7 @@ class AljamAbout extends PageViewElement {
           flex-direction: column;
           align-items: start;
           justify-content: center;
+          line-height: 0;
         }
         .album-cover {
           align-self: center;
@@ -64,6 +66,10 @@ class AljamAbout extends PageViewElement {
         }
         .back {
           grid-area: album-cover-back;
+        }
+        .album-img {
+          max-width: 40vw;
+          max-height: 40vh;
         }
         #modal-album {
           position: fixed;
@@ -118,10 +124,9 @@ class AljamAbout extends PageViewElement {
         
           <section>
             <header class="album-detail">
-                <h1>${item.context.custom.year}</h1>
-                <h5>${item.context.custom.artist}</h5>
-                <h3>${item.context.custom.caption}</h3>
-                <h6>${item.context.custom.label} ${item.context.custom.cat}</h6>
+                <h1>${item.context.custom.year} - ${item.context.custom.artist}</h1>
+                <h2>${item.context.custom.caption}</h2>
+                <h6>${item.context.custom.label} - ${item.context.custom.cat}</h6>
             </header>
             <div class="album-cover front" @click="${(e)=>{this._albumCover = idx;this._toggleCover=true;}}">
               <img class="album-img" src="${url}t_album200x200/${item.public_id}.jpg">
