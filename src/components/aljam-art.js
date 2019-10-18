@@ -18,9 +18,7 @@ class AljamArt extends PageViewElement {
       ${SharedStyles}
       <style>
         .gallery {
-          display: grid;
           grid-template-columns: 20px 1fr 20px;
-          justify-items: end;
         }
         .gallery > * {
           grid-column: 2 / -2;
@@ -29,8 +27,8 @@ class AljamArt extends PageViewElement {
           grid-column: 1 / -1;
         }
         .main-view {
-          height: 60vh;
-          color: white;
+          width: 100%;
+          color: #4a86e8;
           display: grid;
           grid-template-columns: 1fr 3fr;
           font-size: 3vw;

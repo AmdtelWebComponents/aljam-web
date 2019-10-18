@@ -30,7 +30,7 @@ class AljamSnaps extends PageViewElement {
         }
         .main-view {
           height: 60vh;
-          color: white;
+          color: #ff9900;
           display: grid;
           grid-template-columns: 1fr 3fr;
           font-size: 3vw;

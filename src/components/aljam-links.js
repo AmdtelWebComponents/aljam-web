@@ -19,14 +19,13 @@ class AljamLinks extends PageViewElement {
           color: white;
         }
         section {
-          grid-gap: 1rem;
-          grid-template-columns: 2fr 1fr;
-          justify-items: center;
-          align-items: center;
+          grid-template-columns: 1fr 3fr;
+          font-size: 3vw;
+          color: #f1c232;
         }
         section img {
-          max-width: 100vw;
-          max-height: 100vw;
+          max-width: 60vw;
+          max-height: 70vh;
         }
         @media (max-width: 459px) {
           section {
@@ -38,11 +37,11 @@ class AljamLinks extends PageViewElement {
 
     ${this._data.length > 0? html`
       <section>
-        <img src="${url}${this._data[0].public_id}.jpeg">
         <div>
-        <p>How to contact us...</p>
-        ${Object.keys(this._data[0].context.custom).map((key) => html`<p>${key}: ${this._data[0].context.custom[key] }</p>`)}
+        <h3>${this._data[0].context.custom.caption}</h3>
+        <p>${this._data[0].context.custom.alt}</p>
         </div>
+        <img src="${url}${this._data[0].public_id}.jpeg">
       </section>`
     : html`
        <div class="loader">
@@ -59,7 +58,7 @@ class AljamLinks extends PageViewElement {
   }
 
   firstUpdated() {
-    fetch('https://res.cloudinary.com/aljames/image/list/contact-image.json')
+    fetch('https://res.cloudinary.com/aljames/image/list/links-img.json')
     .then(r => r.json())
     .then(data => this._data = data.resources)
     .catch(e => console.log("fetch error:", e));
