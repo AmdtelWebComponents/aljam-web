@@ -27,9 +27,14 @@ class AljamMusic extends PageViewElement {
           grid-template-columns: 1fr;
           grid-template-rows: 1fr 3fr;
         }
-        .text-info {
+        .info-text {
+          display: grid;
+          grid-gap: 3em;
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          justify-items: center;
           color: #00ff00;
-          font-size: 3vw;
+          font-size: 2vw;
         }
         .album-buttons {
           display: grid;
@@ -57,7 +62,10 @@ class AljamMusic extends PageViewElement {
       ${this._data.length > 0? html`
       ${this._chooser ? html`
         <section class="albums">
-          <div class="text-info"><p>Some text here...</p></div>
+          <div class="info-text">
+            <img src="${url}t_album200x200/music/music-logo.jpg">
+            <p>Some text here...</p>
+          </div>
           <div class="album-buttons">
           ${this._data.map((item) => html`
             <button @click="${(e) => {this._chooser=false; this._currentAlbum=item.context.custom.SCID} }" title="Play ${item.context.custom.caption}">

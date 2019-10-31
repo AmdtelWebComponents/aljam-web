@@ -29,12 +29,17 @@ class AljamSnaps extends PageViewElement {
           grid-column: 1 / -1;
         }
         .main-view {
-          height: 60vh;
-          color: #ff9900;
+          width: 100%;
           display: grid;
           grid-template-columns: 1fr 3fr;
-          font-size: 3vw;
           justify-items: center;
+        }
+        .info-text {
+          padding: 10px;
+          background-color: black;
+          color: #ff9900;
+          font-size: 2vw;
+          text-align: center;
         }
         .hs {
           width: 98vw;
@@ -69,7 +74,10 @@ class AljamSnaps extends PageViewElement {
       ${this._pictures.length > 0? html`
         <section class="gallery">
           <div class="main-view">
-          <p>Display some text here....</p>
+          <div class="info-text">
+            <img src="${url}t_album200x200/snaps/snaps-logo.jpg">
+            <p>Display some text here....</p>
+          </div>
           <picture>
             <source srcset="${url}${this._pictures[this._currentPicture].public_id}.webp" type="image/webp">
             <img class="mainimg" src="${url}${this._pictures[this._currentPicture].public_id}.jpg">

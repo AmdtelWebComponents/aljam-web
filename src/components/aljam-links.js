@@ -20,12 +20,17 @@ class AljamLinks extends PageViewElement {
         }
         section {
           grid-template-columns: 1fr 3fr;
-          font-size: 3vw;
-          color: #f1c232;
         }
         section img {
           max-width: 60vw;
           max-height: 70vh;
+        }
+        .info-text {
+          padding: 10px;
+          background-color: black;
+          color: #f1c232;
+          font-size: 2vw;
+          text-align: center;
         }
         @media (max-width: 459px) {
           section {
@@ -37,9 +42,10 @@ class AljamLinks extends PageViewElement {
 
     ${this._data.length > 0? html`
       <section>
-        <div>
-        <h3>${this._data[0].context.custom.caption}</h3>
-        <p>${this._data[0].context.custom.alt}</p>
+        <div class="info-text">
+          <img src="${url}t_album200x200/links/links-logo.jpg">
+          <h3>${this._data[0].context.custom.caption}</h3>
+          <p>${this._data[0].context.custom.alt}</p>
         </div>
         <img src="${url}${this._data[0].public_id}.jpeg">
       </section>`

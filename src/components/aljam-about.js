@@ -8,8 +8,8 @@ import { closeIcon } from './aljam-icons';
 class AljamAbout extends PageViewElement {
   static get properties() {
     return {
-      _discography: { type: Array },
-      _albumCover: { type: Object },
+      _data: { type: Array },
+      _index: { type: Number },
       _toggleCover: { type: Boolean }
     };
   }
@@ -112,15 +112,16 @@ class AljamAbout extends PageViewElement {
           }
         }
       </style>
-      ${this._discography.length > 0? html`
+      ${this._data.length > 0? html`
       <div class="wrapper">
       <div class="info-text">
+        <img src="${url}t_album200x200/discography/discography-logo.jpg">
         <h3>discography</h3>
         <p>This is my ever expanding compendium of albums that I have performed on, recorded or produced.</p>
         <p>I could tell you a tale about the many great creative people who I have been lucky enough to share the stage with... </p>
       </div>
         <div class="album-list">
-        ${this._discography.map((item, idx) => html`
+        ${this._data.map((item, idx) => html`
         
           <section>
             <header class="album-detail">
@@ -128,11 +129,11 @@ class AljamAbout extends PageViewElement {
                 <h2>${item.context.custom.caption}</h2>
                 <h6>${item.context.custom.label} - ${item.context.custom.cat}</h6>
             </header>
-            <div class="album-cover front" @click="${(e)=>{this._albumCover = idx;this._toggleCover=true;}}">
+            <div class="album-cover front" @click="${(e)=>{this._index = idx;this._toggleCover=true;}}">
               <img class="album-img" src="${url}t_album200x200/${item.public_id}.jpg">
             </div>
             <div class="album-cover back">
-              <img class="album-img" src="${url}t_album200x200/discography/${item.context.custom.cat}-back.jpg">
+              <img class="album-img" src="${url}t_album200x200/${item.public_id.slice(0, -6)}-back.jpg">
             </div>
           </section>
          `)
@@ -142,22 +143,22 @@ class AljamAbout extends PageViewElement {
         ${this._toggleCover ?html`
           <div id="modal-album">
           <button class="btn-close" @click="${() => this._toggleCover=false}">${closeIcon}</button>
-          <button class="btn-previous" @click="${() => this._albumCover==0?this._albumCover=this._discography.length-1:this._albumCover--}">Previous</button>
-          <button class="btn-next" @click="${() => this._albumCover==this._discography.length-1?this._albumCover=0:this._albumCover++}">Next</button>
+          <button class="btn-previous" @click="${() => this._index==0?this._index=this._data.length-1:this._index--}">Previous</button>
+          <button class="btn-next" @click="${() => this._index==this._data.length-1?this._index=0:this._index++}">Next</button>
             <section class="modal">
               <div class="album-cover front">
-                <img class="modal-img" src="${url}discography/${this._discography[this._albumCover].context.custom.cat}-front.jpg">
+                <img class="modal-img" src="${url}${this._data[this._index].public_id}.jpg">
               </div>
               <div class="album-cover back">
-                <img class="modal-img" src="${url}discography/${this._discography[this._albumCover].context.custom.cat}-back.jpg">
+                <img class="modal-img" src="${url}${this._data[this._index].public_id.slice(0, -6)}-back.jpg">
               </div>
               <div class="album-detail">
                 <h3>
-                  ${this._discography[this._albumCover].context.custom.artist}
-                  ${this._discography[this._albumCover].context.custom.caption}
-                  ${this._discography[this._albumCover].context.custom.label}
-                  ${this._discography[this._albumCover].context.custom.cat} 
-                  ${this._discography[this._albumCover].context.custom.year}
+                  ${this._data[this._index].context.custom.artist}
+                  ${this._data[this._index].context.custom.caption}
+                  ${this._data[this._index].context.custom.label}
+                  ${this._data[this._index].context.custom.cat} 
+                  ${this._data[this._index].context.custom.year}
                 </h3>
               </div>
             </section>
@@ -175,14 +176,14 @@ class AljamAbout extends PageViewElement {
   constructor() {
     super();
     this._toggleCover = false;
-    this._discography = [];
+    this._data = [];
   }
   
   firstUpdated() {
     fetch('https://res.cloudinary.com/aljames/image/list/Album-Front.json')
     .then(r => r.json())
     .then(data => data.resources.sort((a,b)=> b.context.custom.year.localeCompare(a.context.custom.year)))
-    .then(data => this._discography = data)
+    .then(data => this._data = data)
     .catch(e => console.log("fetch error:", e));
   }
 }
