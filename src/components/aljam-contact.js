@@ -19,17 +19,18 @@ class AljamContact extends PageViewElement {
           color: white;
         }
         section {
-          grid-gap: 1rem;
           grid-template-columns: 1fr 3fr;
-          font-size: 3vw;
-          color: #9900ff;
         }
-        section div {
+        .info-text {
+          padding: 10px;
+          background-color: black;
+          color: #9900ff;
+          font-size: 2vw;
           text-align: center;
         }
         section img {
           max-width: 60vw;
-          max-height: 80vh;
+          max-height: 70vh;
         }
         @media (max-width: 459px) {
           section {
@@ -41,7 +42,8 @@ class AljamContact extends PageViewElement {
 
     ${this._data.length > 0? html`
       <section>
-        <div>
+        <div class="info-text">
+          <img src="${url}t_album200x200/contact/contact-logo.jpg">
           <h3>${this._data[0].context.custom.caption}</h3>
           <p>${this._data[0].context.custom.alt}</p>
           <p>${this._data[0].context.custom.email}</p>
