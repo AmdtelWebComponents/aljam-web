@@ -21,22 +21,39 @@ class AljamMusic extends PageViewElement {
           border: none;
           overflow: hidden;
           width: 100%;
-          height: 450px;
+          height: 100%;
         }
         .albums {
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 3fr;
+        }
+        .info-text {
+          display: grid;
+          grid-gap: 3em;
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          justify-items: center;
+          color: #00ff00;
+          font-size: 2vw;
+        }
+        .album-buttons {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
         }
         .albums button {
           position: unset;
           height: unset;
+          padding: 2rem;
+          margin: 0rem 2rem;
         }
         .scwidget {
+          grid-template-rows: 4fr 1fr;
           justify-items: center;
           align-items: center;
-          padding: 1rem;
         }
         
         .chooserbtn {
+          position: unset;
           top: 1rem;
           right: 1rem;
         }
@@ -45,19 +62,24 @@ class AljamMusic extends PageViewElement {
       ${this._data.length > 0? html`
       ${this._chooser ? html`
         <section class="albums">
-          ${this._data.map(
-          (item) => html`
-        <button @click="${(e) => {this._chooser=false; this._currentAlbum=item.context.custom.SCID} }" title="Play ${item.context.custom.caption}">
-          <img src="${url}t_album200x200/${item.public_id}">
-          <br>
-            ${item.context.custom.caption}
-          </button>
+          <div class="info-text">
+            <img src="${url}t_album200x200/music/music-logo.jpg">
+            <p>Some text here...</p>
+          </div>
+          <div class="album-buttons">
+          ${this._data.map((item) => html`
+            <button @click="${(e) => {this._chooser=false; this._currentAlbum=item.context.custom.SCID} }" title="Play ${item.context.custom.caption}">
+              <img src="${url}t_album200x200/${item.public_id}">
+              <br>
+              ${item.context.custom.caption}
+            </button>
           `)}
+          </div>
         </section>`
       :html`
         <section class="scwidget">
-          <button class="chooserbtn" @click="${() => this._chooser=true}">Return to Albums</button>
           <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true"></iframe>
+          <button class="chooserbtn" @click="${() => this._chooser=true}">Return to Albums</button>
         </section>`
       }`
       :html`

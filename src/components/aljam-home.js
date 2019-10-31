@@ -3,6 +3,7 @@ import { PageViewElement } from './page-view-element.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+import { forward } from './aljam-icons.js';
 
 class AljamHome extends PageViewElement {
   static get properties() {
@@ -24,25 +25,31 @@ class AljamHome extends PageViewElement {
           grid-gap: 1rem;
           grid-template-columns: 1fr 3fr;
           font-size: 2vw;
-          height: 80vh;
         }
 
-        section .main-img {
+        .main-img {
           height: 60vh;
         }
 
-        .caption {
-          background: rgba(0, 0, 0, .5);
-          align-self: center;
-          justify-self: center;
-          min-width: 75%;
-          padding: 1rem;
-          font-size: 1.5rem;
-          color: #fff;
+        .main-img-logo {
+          max-height: 20vh;
+          max-width: 20vw;
+        }
+
+        .text-info {
+          padding-left: 2rem;
           text-align: center;
-          text-decoration: none;
-          border-radius: 5px;
-          border: 1px solid #fff;
+        }
+
+        .icon-forward {
+          width: 10vw;
+          height: 10vh;
+          fill: goldenrod;
+        }
+        .icon-forward:hover {
+          width: 15vw;
+          height: 15vh;
+          fill: gold;
         }
         
         @media (max-width: 459px) {
@@ -66,51 +73,63 @@ class AljamHome extends PageViewElement {
       </style>
       ${this._data.length > 0? html`
         <section id="main">
-          <img style="height: 20vw" src="${url}/home/home-section-logo.jpg">
-          <img class="main-img" src="${url}/${this._data[0].public_id}.jpg">
+          <img class="main-img-logo" src="${url}home/00-section-logo.jpg">
+          <img class="main-img" src="${url}${this._data[0].public_id}.jpg">
         </section>
-        <section id="discography" style="color: #ff0000">
-          <div>
+
+        <section id="discography" style="color: #ff0000; fill: #ff0000;">
+          <div class="text-info">
             <h3>${this._data[1].context.custom.caption}</h3>
             <p>${this._data[1].context.custom.alt}</p>
+            <a href="/about">${forward}</a>
           </div>
-          <img class="main-img" src="${url}/${this._data[1].public_id}.jpg">
+          <img class="main-img" src="${url}${this._data[1].public_id}.jpg">
         </section>
+
         <section id="music" style="color: #00ff00">
-          <div>
+          <div class="text-info">
             <h3>${this._data[2].context.custom.caption}</h3>
             <p>${this._data[2].context.custom.alt}</p>
+            <a href="/music">${forward}</a>
           </div>
-          <img class="main-img" src="${url}/${this._data[2].public_id}.jpg">
+          <img class="main-img" src="${url}${this._data[2].public_id}.jpg">
         </section>
+
         <section id="gallery" style="color: #4a86e8">
-          <div>
+          <div class="text-info">
             <h3>${this._data[3].context.custom.caption}</h3>
             <p>${this._data[3].context.custom.alt}</p>
+            <a href="/art">${forward}</a>
           </div>
-          <img class="main-img" src="${url}/${this._data[3].public_id}.jpg">
+          <img class="main-img" src="${url}${this._data[3].public_id}.jpg">
         </section>
+
         <section id="contact" style="color: #9900ff">
-          <div>
+          <div class="text-info">
             <h3>${this._data[4].context.custom.caption}</h3>
             <p>${this._data[4].context.custom.alt}</p>
             <p>${this._data[4].context.custom.email}</p>
+            <a href="/contact">${forward}</a>
           </div>
-          <img class="main-img" src="${url}/${this._data[4].public_id}.jpg">
+          <img class="main-img" src="${url}${this._data[4].public_id}.jpg">
         </section>
+
         <section id="snaps" style="color: #ff9900">
-          <div>
+          <div class="text-info">
             <h3>${this._data[5].context.custom.caption}</h3>
             <p>${this._data[5].context.custom.alt}</p>
+            <a href="/snaps">${forward}</a>
           </div>
-          <img class="main-img" src="${url}/${this._data[5].public_id}.jpg">
+          <img class="main-img" src="${url}${this._data[5].public_id}.jpg">
         </section>
+
         <section id="links" style="color: #f1c232">
-          <div>
+          <div class="text-info">
             <h3>${this._data[6].context.custom.caption}</h3>
             <p>${this._data[6].context.custom.alt}</p>
+            <a href="/links">${forward}</a>
           </div>
-          <img class="main-img" src="${url}/${this._data[6].public_id}.jpg">
+          <img class="main-img" src="${url}${this._data[6].public_id}.jpg">
         </section>`
       :html`
         <div class="loader">

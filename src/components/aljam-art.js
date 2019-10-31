@@ -8,8 +8,8 @@ import { closeIcon } from './aljam-icons';
 class AljamArt extends PageViewElement {
   static get properties(){
     return {
-      _pictures: { type: Array },
-      _currentPicture: { type: Number },
+      _data: { type: Array },
+      _index: { type: Number },
       _chooser: { type: Boolean }
     };
   }
@@ -18,9 +18,7 @@ class AljamArt extends PageViewElement {
       ${SharedStyles}
       <style>
         .gallery {
-          display: grid;
           grid-template-columns: 20px 1fr 20px;
-          justify-items: end;
         }
         .gallery > * {
           grid-column: 2 / -2;
@@ -29,12 +27,17 @@ class AljamArt extends PageViewElement {
           grid-column: 1 / -1;
         }
         .main-view {
-          height: 60vh;
-          color: white;
+          width: 100%;
           display: grid;
           grid-template-columns: 1fr 3fr;
-          font-size: 3vw;
           justify-items: center;
+        }
+        .info-text {
+          padding: 10px;
+          background-color: black;
+          color: #4a86e8;
+          font-size: 2vw;
+          text-align: center;
         }
         .hs {
           width: 98vw;
@@ -66,22 +69,23 @@ class AljamArt extends PageViewElement {
           max-width: 60vw;
         }
       </style>
-      ${this._pictures.length > 0? html`
+      ${this._data.length > 0? html`
         <section class="gallery">
           <div class="main-view">
-            <div>
-              <h3>${this._pictures[this._currentPicture].context.custom.caption}</h3>
-              <p>${this._pictures[this._currentPicture].context.custom.alt}</p>
+            <div class="info-text">
+              <img src="${url}t_album200x200/gallery/gallery-logo.jpg">
+              <h3>${this._data[this._index].context.custom.caption}</h3>
+              <p>${this._data[this._index].context.custom.alt}</p>
             </div>
             <picture>
-              <source srcset="${url}${this._pictures[this._currentPicture].public_id}.webp" type="image/webp">
-              <img class="mainimg" src="${url}${this._pictures[this._currentPicture].public_id}.jpg">
+              <source srcset="${url}${this._data[this._index].public_id}.webp" type="image/webp">
+              <img class="mainimg" src="${url}${this._data[this._index].public_id}.jpg">
             </picture>
           </div>
           <div class="hs full" >
-            ${this._pictures.map((item, idx) => html`
+            ${this._data.map((item, idx) => html`
               <div class="item">
-                <picture @click="${(e) => {this._currentPicture = idx;this._chooser=true}}">
+                <picture @click="${(e) => {this._index = idx;this._chooser=true}}">
                   <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
                   <img class="pic" src="${url}t_media_lib_thumb/${item.public_id}.jpg">
                 </picture>
@@ -100,14 +104,14 @@ class AljamArt extends PageViewElement {
 
   constructor() {
     super();
-    this._currentPicture = 0;
-    this._pictures = [];
+    this._index = 0;
+    this._data = [];
   }
 
   firstUpdated() {
     fetch('https://res.cloudinary.com/aljames/image/list/gallery.json')
     .then(r => r.json())
-    .then(data => this._pictures = data.resources)
+    .then(data => this._data = data.resources)
     .catch(e => console.log("fetch error:", e));
   }
 }

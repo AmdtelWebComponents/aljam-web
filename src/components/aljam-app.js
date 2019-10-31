@@ -231,6 +231,7 @@ class AljamApp extends connect(store)(LitElement) {
         <aljam-about class="page" ?active="${this._page === 'about'}"></aljam-about>
         <aljam-contact class="page" ?active="${this._page === 'contact'}"></aljam-contact>
         <aljam-snaps class="page" ?active="${this._page === 'snaps'}"></aljam-snaps>
+        <aljam-links class="page" ?active="${this._page === 'links'}"></aljam-links>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
 

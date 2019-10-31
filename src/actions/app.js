@@ -60,6 +60,11 @@ const loadPage = (page) => (dispatch) => {
         window.scroll(0,0)
       });
       break;
+    case 'links':
+      import('../components/aljam-links.js').then((module) => {
+        window.scroll(0,0)
+      });
+      break;
     default:
       page = 'view404';
       import('../components/my-view404.js');
