@@ -43,7 +43,7 @@ class AljamLinks extends PageViewElement {
     ${this._data.length > 0? html`
       <section>
         <div class="info-text">
-          <img src="${url}t_album200x200/links/links-logo.jpg">
+          <img src="${url}links/links-logo.png">
           <h3>${this._data[0].context.custom.caption}</h3>
           <p>${this._data[0].context.custom.alt}</p>
         </div>

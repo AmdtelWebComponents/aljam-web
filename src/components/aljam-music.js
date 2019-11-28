@@ -17,65 +17,79 @@ class AljamMusic extends PageViewElement {
     return html`
       ${SharedStyles}
       <style>
+        .layout {
+          display: grid;
+          grid-template-rows: 20vh 70vh;
+          grid-template-areas:
+            "info-text"
+            "albums";
+          overflow-y: auto;
+        }
+        .info-text {
+          grid-area: info-text;
+          grid-template-columns: 1fr 4fr;
+          color: #00ff00;
+          font-size: 1.4em;
+          text-align: center;
+        }
+        .logo {
+          max-height: 90%;
+          max-width: 90%;
+        }
+        .albums {
+          grid-area: albums;
+          grid-auto-flow: row;
+        }
+        .albums button {
+          position: unset;
+          height: unset;
+          padding: 1em;
+          margin: 1em 1em;
+        }
         iframe {
           border: none;
           overflow: hidden;
           width: 100%;
           height: 100%;
         }
-        .albums {
-          grid-template-columns: 1fr;
-          grid-template-rows: 1fr 3fr;
-        }
-        .info-text {
-          display: grid;
-          grid-gap: 3em;
-          grid-template-columns: 1fr 1fr;
-          align-items: center;
-          justify-items: center;
-          color: #00ff00;
-          font-size: 2vw;
-        }
-        .album-buttons {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-        }
-        .albums button {
-          position: unset;
-          height: unset;
-          padding: 2rem;
-          margin: 0rem 2rem;
-        }
         .scwidget {
-          grid-template-rows: 4fr 1fr;
-          justify-items: center;
-          align-items: center;
+          grid-template-rows: 80vh 10vh;
         }
-        
         .chooserbtn {
           position: unset;
-          top: 1rem;
-          right: 1rem;
+          top: 1em;
+          right: 1em;
+        }
+        @media (min-width: 600px) {
+          .albums {
+            grid-auto-flow: column;
+          }
+          .btn-img {
+            max-width: 22vw;
+          }
         }
       </style>
       
       ${this._data.length > 0? html`
       ${this._chooser ? html`
-        <section class="albums">
-          <div class="info-text">
-            <img src="${url}t_album200x200/music/music-logo.jpg">
-            <p>Some text here...</p>
+      <div class="layout">
+        <section class="info-text">
+          <img class="logo" src="${url}music/music-logo.png">
+          <div>
+            <h3>Music</h3>
+            <p>three albums, click on a cover to listen in soundcloud...</p>
           </div>
-          <div class="album-buttons">
+        </section>
+        <section class="albums">
           ${this._data.map((item) => html`
             <button @click="${(e) => {this._chooser=false; this._currentAlbum=item.context.custom.SCID} }" title="Play ${item.context.custom.caption}">
-              <img src="${url}t_album200x200/${item.public_id}">
+              <img class="btn-img" src="${url}t_album200x200/${item.public_id}">
               <br>
               ${item.context.custom.caption}
             </button>
           `)}
-          </div>
-        </section>`
+        </section>
+        </div>`
       :html`
         <section class="scwidget">
           <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true"></iframe>

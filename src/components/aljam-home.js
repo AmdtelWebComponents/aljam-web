@@ -16,64 +16,64 @@ class AljamHome extends PageViewElement {
     return html`
       ${SharedStyles}
       <style>
-        iron-icon {
-          --iron-icon-height: 50px;
-          --iron-icon-width: 50px;
+        .layout {
+          display: grid;
+          grid-auto-rows: 60vh;
+          grid-gap: 5vh;
         }
-
         section {
-          grid-gap: 1rem;
-          grid-template-columns: 1fr 3fr;
-          font-size: 2vw;
+          grid-template-columns: 1fr;
         }
 
         .main-img {
-          height: 60vh;
+          grid-column: 1/1;
+          grid-row: 1/1;
+          max-width: 100%;
+          max-height: 100%;
+          z-index: -1;
         }
 
         .main-img-logo {
+          grid-column: 1/1;
+          grid-row: 1/1;
           max-height: 20vh;
           max-width: 20vw;
         }
 
         .text-info {
-          padding-left: 2rem;
+          grid-column: 1/1;
+          grid-row: 1/1;
           text-align: center;
+          font-size: 2em
+        }
+
+        .text-info > p, h3 {
+          background: #00000090;
         }
 
         .icon-forward {
           width: 10vw;
           height: 10vh;
-          fill: goldenrod;
-        }
-        .icon-forward:hover {
-          width: 15vw;
-          height: 15vh;
-          fill: gold;
+          fill: inherit;
         }
         
-        @media (max-width: 459px) {
-          section {
-            grid-template-columns: 1fr;
-            grid-template-rows: repeat(4, 1fr);
+        @media (min-width: 600px) {
+          .layout {
+            grid-auto-rows: 90vh;
+            grid-gap: 10vh;
           }
-        }
-
-        #facebook {
-          --iron-icon-fill-color: blue;
-        }
-
-        #googleplus {
-          --iron-icon-fill-color: red;
-        }
-
-        #twitter {
-          --iron-icon-fill-color: blue;
+          section {
+            grid-template-columns: 1fr 3fr;
+          }
+          .main-img {
+          grid-column: 2/2;
+          }
         }
       </style>
       ${this._data.length > 0? html`
+        <div class="layout">
         <section id="main">
-          <img class="main-img-logo" src="${url}home/00-section-logo.jpg">
+          <img class="main-img-logo" src="${url}home/home-logo.png">
           <img class="main-img" src="${url}${this._data[0].public_id}.jpg">
         </section>
 
@@ -86,7 +86,7 @@ class AljamHome extends PageViewElement {
           <img class="main-img" src="${url}${this._data[1].public_id}.jpg">
         </section>
 
-        <section id="music" style="color: #00ff00">
+        <section id="music" style="color: #00ff00; fill: #00ff00">
           <div class="text-info">
             <h3>${this._data[2].context.custom.caption}</h3>
             <p>${this._data[2].context.custom.alt}</p>
@@ -95,7 +95,7 @@ class AljamHome extends PageViewElement {
           <img class="main-img" src="${url}${this._data[2].public_id}.jpg">
         </section>
 
-        <section id="gallery" style="color: #4a86e8">
+        <section id="gallery" style="color: #4a86e8; fill: #4a86e8">
           <div class="text-info">
             <h3>${this._data[3].context.custom.caption}</h3>
             <p>${this._data[3].context.custom.alt}</p>
@@ -104,7 +104,7 @@ class AljamHome extends PageViewElement {
           <img class="main-img" src="${url}${this._data[3].public_id}.jpg">
         </section>
 
-        <section id="contact" style="color: #9900ff">
+        <section id="contact" style="color: #9900ff; fill: #9900ff">
           <div class="text-info">
             <h3>${this._data[4].context.custom.caption}</h3>
             <p>${this._data[4].context.custom.alt}</p>
@@ -114,7 +114,7 @@ class AljamHome extends PageViewElement {
           <img class="main-img" src="${url}${this._data[4].public_id}.jpg">
         </section>
 
-        <section id="snaps" style="color: #ff9900">
+        <section id="snaps" style="color: #ff9900; fill: #ff9900">
           <div class="text-info">
             <h3>${this._data[5].context.custom.caption}</h3>
             <p>${this._data[5].context.custom.alt}</p>
@@ -123,14 +123,16 @@ class AljamHome extends PageViewElement {
           <img class="main-img" src="${url}${this._data[5].public_id}.jpg">
         </section>
 
-        <section id="links" style="color: #f1c232">
+        <section id="links" style="color: #f1c232; fill: #f1c232">
           <div class="text-info">
             <h3>${this._data[6].context.custom.caption}</h3>
             <p>${this._data[6].context.custom.alt}</p>
             <a href="/links">${forward}</a>
           </div>
           <img class="main-img" src="${url}${this._data[6].public_id}.jpg">
-        </section>`
+        </section>
+        </div>
+        `
       :html`
         <div class="loader">
           <img class="spinner" src="${url}home/logo-transparent.png">

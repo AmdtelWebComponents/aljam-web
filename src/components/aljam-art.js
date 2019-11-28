@@ -17,33 +17,25 @@ class AljamArt extends PageViewElement {
     return html`
       ${SharedStyles}
       <style>
-        .gallery {
-          grid-template-columns: 20px 1fr 20px;
-        }
-        .gallery > * {
-          grid-column: 2 / -2;
-        }
-        .gallery > .full {
-          grid-column: 1 / -1;
-        }
-        .main-view {
-          width: 100%;
+        .layout {
           display: grid;
-          grid-template-columns: 1fr 3fr;
+          grid-template-rows: 15vh 60vh 15vh;
+          align-items: center;
           justify-items: center;
         }
         .info-text {
           padding: 10px;
-          background-color: black;
           color: #4a86e8;
-          font-size: 2vw;
+          font-size: 1.8em;
           text-align: center;
+        }
+        .info-text > img {
+          display: none;
         }
         .hs {
           width: 98vw;
           display: grid;
           grid-gap: 10px;
-          grid-template-columns: 10px;
           grid-auto-flow: column;
           overflow-x: scroll;
           scroll-snap-type: x proximity;
@@ -53,46 +45,47 @@ class AljamArt extends PageViewElement {
           content: '';
           width: 10px;
         }
-        .hs > div,
-        .item {
-          scroll-snap-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
         .pic {
           height: 10vh;
         }
         .mainimg {
           max-height: 60vh;
-          max-width: 60vw;
+          max-width: 96vw;
+        }
+        @media (min-width: 600px) {
+          .layout {
+            grid-template-columns: 20vw 80vw;
+            grid-template-rows: 70vh 20vh;
+          }
+          .mainimg {
+            max-height: 70vh;
+            max-width: 80vw;
+          }
+          .hs {
+            grid-column: 1/3;
+          }
         }
       </style>
       ${this._data.length > 0? html`
-        <section class="gallery">
-          <div class="main-view">
-            <div class="info-text">
-              <img src="${url}t_album200x200/gallery/gallery-logo.jpg">
-              <h3>${this._data[this._index].context.custom.caption}</h3>
-              <p>${this._data[this._index].context.custom.alt}</p>
-            </div>
-            <picture>
-              <source srcset="${url}${this._data[this._index].public_id}.webp" type="image/webp">
-              <img class="mainimg" src="${url}${this._data[this._index].public_id}.jpg">
-            </picture>
+        <div class="layout">
+          <div class="info-text">
+            <img src="${url}gallery/gallery-logo.png">
+            <h3>${this._data[this._index].context.custom.caption}</h3>
+            <p>${this._data[this._index].context.custom.alt}</p>
           </div>
+          <picture>
+            <source srcset="${url}${this._data[this._index].public_id}.webp" type="image/webp">
+            <img class="mainimg" src="${url}${this._data[this._index].public_id}.jpg">
+          </picture>
           <div class="hs full" >
             ${this._data.map((item, idx) => html`
-              <div class="item">
                 <picture @click="${(e) => {this._index = idx;this._chooser=true}}">
                   <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
                   <img class="pic" src="${url}t_media_lib_thumb/${item.public_id}.jpg">
-                </picture>
-              </div>`)
+                </picture>`)
             }
           </div>
-        </section>`
+        </div>`
       :html`
         <div class="loader">
           <img class="spinner" src="${url}home/logo-transparent.png">
