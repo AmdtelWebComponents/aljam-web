@@ -71,7 +71,7 @@ class AljamApp extends connect(store)(LitElement) {
         }
 
         app-header {
-          height: 20vh;
+          height: 10vh;
           position: fixed;
           top: 0;
           left: 0;
@@ -81,13 +81,11 @@ class AljamApp extends connect(store)(LitElement) {
           color: var(--app-header-text-color);
         }
         .toolbar-top {
-          height: 20vh;
-          background-color: var(--app-header-background-color);
+          height: 10vh;
+          font-size: 5em;
         }
         [main-title] {
-          font-family: 'Caveat';
           color: #f1c232;
-          font-size: 5vw;
           text-decoration: none;
           pointer-events: auto;
           /* In the narrow layout, the toolbar is offset by the width of the
@@ -97,7 +95,6 @@ class AljamApp extends connect(store)(LitElement) {
         }
         .toolbar-list {
           display: none;
-          font-size: 2vw;
         }
         .toolbar-list > a {
           display: inline-block;
@@ -107,19 +104,15 @@ class AljamApp extends connect(store)(LitElement) {
           padding: 4px 24px;
         }
         .toolbar-list > a[selected] {
-          font-size: larger;
           border-bottom: 4px solid;
         }
 
         .menu-btn {
           position: fixed;
-          background: black;
-          top: 1rem;
-          left: 1rem;
+          background: none;
           fill: white;
           cursor: pointer;
-          height: 44px;
-          width: 44px;
+          border-width: 0px;
         }
 
         .drawer-list {
@@ -129,6 +122,7 @@ class AljamApp extends connect(store)(LitElement) {
           padding: 24px;
           background: var(--app-drawer-background-color);
           position: relative;
+          font-size: 2em;
         }
 
         .drawer-list>a {
@@ -150,8 +144,8 @@ class AljamApp extends connect(store)(LitElement) {
         }
 
         .main-content {
-          height: 80vh;
-          padding-top: 20vh;
+          height: 90vh;
+          padding-top: 10vh;
         }
 
         .page {
@@ -162,24 +156,18 @@ class AljamApp extends connect(store)(LitElement) {
           display: block;
         }
 
-        footer {
-          padding: 24px;
-          background: var(--app-drawer-background-color);
-          color: var(--app-drawer-text-color);
-          text-align: center;
-        }
-
-        /* Wide layout: when the viewport width is bigger than 460px, layout
+        /* Wide layout: when the viewport width is bigger than 600px, layout
         changes to a wide layout */
-        @media (min-width: 460px) {
+        @media (min-width: 600px) {
+          .toolbar-top {
+            height: 10vh;
+            font-size: 1.4em;
+          }
           .toolbar-list {
             display: block;
           }
           .menu-btn {
             display: none;
-          }
-          .main-content {
-            padding-top: 20vh;
           }
           /* The drawer button isn't shown in the wide layout, so we don't
           need to offset the title */
@@ -204,11 +192,7 @@ class AljamApp extends connect(store)(LitElement) {
           <a style="color: #f1c232;" ?selected="${this._page === 'links'}" href="/links">links</a>
         </nav>
         </app-toolbar>
-        
       </app-header>
-
-      
-
       <!-- Drawer content -->
       <app-drawer
           .opened="${this._drawerOpened}"
@@ -222,7 +206,6 @@ class AljamApp extends connect(store)(LitElement) {
           <a style="color: #f1c232;" ?selected="${this._page === 'links'}" href="/links">links</a>
         </nav>
       </app-drawer>
-
       <!-- Main content -->
       <main role="main" class="main-content">
         <aljam-home class="page" ?active="${this._page === 'home'}"></aljam-home>
@@ -234,7 +217,6 @@ class AljamApp extends connect(store)(LitElement) {
         <aljam-links class="page" ?active="${this._page === 'links'}"></aljam-links>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
-
       <!-- <footer>
         <p>Made with &hearts; by the Amdtel Webdev team.</p>
       </footer> -->

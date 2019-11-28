@@ -43,7 +43,7 @@ class AljamContact extends PageViewElement {
     ${this._data.length > 0? html`
       <section>
         <div class="info-text">
-          <img src="${url}t_album200x200/contact/contact-logo.jpg">
+          <img src="${url}contact/contact-logo.png">
           <h3>${this._data[0].context.custom.caption}</h3>
           <p>${this._data[0].context.custom.alt}</p>
           <p>${this._data[0].context.custom.email}</p>

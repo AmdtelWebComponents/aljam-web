@@ -8,8 +8,8 @@ import { closeIcon } from './aljam-icons';
 class AljamSnaps extends PageViewElement {
   static get properties(){
     return {
-      _pictures: { type: Array },
-      _currentPicture: { type: Number },
+      _data: { type: Array },
+      _index: { type: Number },
       _chooser: { type: Boolean }
     };
   }
@@ -17,35 +17,25 @@ class AljamSnaps extends PageViewElement {
     return html`
       ${SharedStyles}
       <style>
-        .gallery {
+        .layout {
           display: grid;
-          grid-template-columns: 20px 1fr 20px;
-          justify-items: end;
-        }
-        .gallery > * {
-          grid-column: 2 / -2;
-        }
-        .gallery > .full {
-          grid-column: 1 / -1;
-        }
-        .main-view {
-          width: 100%;
-          display: grid;
-          grid-template-columns: 1fr 3fr;
+          grid-template-rows: 15vh 60vh 15vh;
+          align-items: center;
           justify-items: center;
         }
         .info-text {
           padding: 10px;
-          background-color: black;
           color: #ff9900;
-          font-size: 2vw;
+          font-size: 1.8em;
           text-align: center;
+        }
+        .info-text > img {
+          display: none;
         }
         .hs {
           width: 98vw;
           display: grid;
           grid-gap: 10px;
-          grid-template-columns: 10px;
           grid-auto-flow: column;
           overflow-x: scroll;
           scroll-snap-type: x proximity;
@@ -55,45 +45,44 @@ class AljamSnaps extends PageViewElement {
           content: '';
           width: 10px;
         }
-        .hs > div,
-        .item {
-          scroll-snap-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
         .pic {
           height: 10vh;
         }
         .mainimg {
           max-height: 60vh;
-          max-width: 60vw;
+          max-width: 96vw;
+        }
+        @media (min-width: 600px) {
+          .layout {
+            grid-template-columns: 20vw 80vw;
+            grid-template-rows: 70vh 20vh;
+          }
+          .mainimg {
+            max-height: 70vh;
+            max-width: 80vw;
+          }
+          .hs {
+            grid-column: 1/3;
+          }
         }
       </style>
-      ${this._pictures.length > 0? html`
-        <section class="gallery">
-          <div class="main-view">
+      ${this._data.length > 0? html`
+        <div class="layout">
           <div class="info-text">
-            <img src="${url}t_album200x200/snaps/snaps-logo.jpg">
+            <img src="${url}snaps/snaps-logo.png">
             <p>Display some text here....</p>
           </div>
-          <picture>
-            <source srcset="${url}${this._pictures[this._currentPicture].public_id}.webp" type="image/webp">
-            <img class="mainimg" src="${url}${this._pictures[this._currentPicture].public_id}.jpg">
-          </picture>
-          </div>
+            <img class="mainimg" src="${url}${this._data[this._index].public_id}.jpg">
           <div class="hs full" >
-            ${this._pictures.map((item, idx) => html`
-              <div class="item">
-                <picture @click="${(e) => {this._currentPicture = idx;this._chooser=true}}">
-                  <source srcset="${url}t_media_lib_thumb/${item.public_id}.webp" type="image/webp">
-                  <img class="pic" src="${url}t_media_lib_thumb/${item.public_id}.jpg">
-                </picture>
-              </div>`)
+            ${this._data.map((item, idx) => html`
+              <img
+                class="pic"
+                src="${url}t_media_lib_thumb/${item.public_id}.jpg"
+                @click="${(e) => {this._index = idx;this._chooser=true}}"
+              >`)
             }
           </div>
-        </section>`
+        </div>`
       :html`
         <div class="loader">
           <img class="spinner" src="${url}home/logo-transparent.png">
@@ -105,14 +94,14 @@ class AljamSnaps extends PageViewElement {
 
   constructor() {
     super();
-    this._currentPicture = 0;
-    this._pictures = [];
+    this._index = 0;
+    this._data = [];
   }
 
   firstUpdated() {
     fetch('https://res.cloudinary.com/aljames/image/list/snaps-img.json')
     .then(r => r.json())
-    .then(data => this._pictures = data.resources)
+    .then(data => this._data = data.resources)
     .catch(e => console.log("fetch error:", e));
   }
 }
