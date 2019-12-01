@@ -70,7 +70,8 @@ class AljamSnaps extends PageViewElement {
         <div class="layout">
           <div class="info-text">
             <img src="${url}snaps/snaps-logo.png">
-            <p>Display some text here....</p>
+            <h3>${this._data[this._index].context.custom.caption}</h3>
+            <p>${this._data[this._index].context.custom.alt}</p>
           </div>
             <img class="mainimg" src="${url}${this._data[this._index].public_id}.jpg">
           <div class="hs full" >
@@ -101,7 +102,12 @@ class AljamSnaps extends PageViewElement {
   firstUpdated() {
     fetch('https://res.cloudinary.com/aljames/image/list/snaps-img.json')
     .then(r => r.json())
-    .then(data => this._data = data.resources)
+    .then(data =>
+      data.resources.sort((a, b) =>
+        a.context.custom.order.localeCompare(b.context.custom.order)
+      )
+    )
+    .then(data => this._data = data)
     .catch(e => console.log("fetch error:", e));
   }
 }
