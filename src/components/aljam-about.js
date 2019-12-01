@@ -9,6 +9,7 @@ class AljamAbout extends PageViewElement {
   static get properties() {
     return {
       _data: { type: Array },
+      _logoData: { type: Array},
       _index: { type: Number },
       _toggleCover: { type: Boolean }
     };
@@ -80,9 +81,12 @@ class AljamAbout extends PageViewElement {
           color: white;
         }
         .modal {
+          display: grid;
           grid-template-columns: 1fr;
           min-height: 100vh;
           background: #000000ab;
+          justify-items: center;
+          align-items: center;
         }
         .modal-img {
             max-width: 100%;
@@ -114,15 +118,8 @@ class AljamAbout extends PageViewElement {
           <div class="info-text">
             <img class="logo" src="${url}discography/discography-logo.png"/>
             <div>
-              <h3>discography</h3>
-              <p>
-                This is my ever expanding compendium of albums that I have
-                performed on, recorded or produced.
-              </p>
-              <p>
-                I could tell you a tale about the many great creative people
-                who I have been lucky enough to share the stage with...
-              </p>
+              <h3>${this._logoData[0].context.custom.caption}</h3>
+              <p>${this._logoData[0].context.custom.alt}</p>
             </div>
           </div>
           <div class="album-list">
@@ -166,6 +163,11 @@ class AljamAbout extends PageViewElement {
   }
 
   firstUpdated() {
+    fetch("https://res.cloudinary.com/aljames/image/list/discography-logo.json")
+      .then(r => r.json())
+      .then(data => (this._logoData = data.resources))
+      .catch(e => console.log("fetch error:", e));
+
     fetch("https://res.cloudinary.com/aljames/image/list/Album-Front.json")
       .then(r => r.json())
       .then(data =>
