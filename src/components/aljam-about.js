@@ -19,15 +19,10 @@ class AljamAbout extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          display: grid;
-          height: 90vh;
-          grid-template-columns: 1fr;
-          grid-template-areas:
-            "info-text"
-            "album-list";
-          overflow-y: auto;
+          grid-template-rows: 20vh 70vh;
+          font-size: 1.5em;
         }
-        section {
+        .album-item {
           grid-gap: 0.2em;
           padding: 0.2em;
           color: white;
@@ -36,30 +31,26 @@ class AljamAbout extends PageViewElement {
             "album-detail album-detail"
             "album-cover-front album-cover-back";
         }
-        section:nth-of-type(even) {
+        .album-item:nth-of-type(even) {
           background: white;
           color: black;
         }
         .logo {
-          max-height: 100%;
-          max-width: 100%;
+          max-height: 10vh;
         }
         .info-text {
-          display: grid;
           grid-template-columns: 1fr 3fr;
-          grid-area: info-text;
-          padding: 10px;
           color: red;
           text-align: center;
-          align-items: center;
         }
         .album-list {
-          grid-area: album-list;
+          height: 70vh;
           overflow-y: scroll;
         }
         .album-detail {
           grid-area: album-detail;
           text-align: center;
+          line-height: 0.5;
         }
         .front {
           grid-area: album-cover-front;
@@ -81,12 +72,9 @@ class AljamAbout extends PageViewElement {
           color: white;
         }
         .modal {
-          display: grid;
           grid-template-columns: 1fr;
           min-height: 100vh;
           background: #000000ab;
-          justify-items: center;
-          align-items: center;
         }
         .modal-img {
             max-width: 100%;
@@ -95,18 +83,19 @@ class AljamAbout extends PageViewElement {
         
         @media (min-width: 600px) {
           .layout {
-            grid-template-columns: 1fr 3fr;
-            grid-template-areas: "info-text album-list";
+            grid-template-columns: 2fr 3fr;
+            grid-template-rows: 90vh;
           }
           .info-text {
             grid-template-columns: 1fr;
             grid-template-rows: 20vh;
-            justify-items: center;
-            align-items: center;
           }
-          section {
+          .album-item {
             grid-template-columns: repeat(4, 1fr);
             grid-template-areas: "album-detail album-detail album-cover-front album-cover-back";
+          }
+          .album-list {
+            height: 90vh;
           }
           .modal {
           grid-template-columns: repeat(2, 1fr);
@@ -114,17 +103,17 @@ class AljamAbout extends PageViewElement {
         }
       </style>
       ${this._data.length > 0 ? html`
-        <div class="layout">
-          <div class="info-text">
+        <section class="layout">
+          <section class="info-text">
             <img class="logo" src="${url}discography/discography-logo.png"/>
             <div>
               <h3>${this._logoData[0].context.custom.caption}</h3>
               <p>${this._logoData[0].context.custom.alt}</p>
             </div>
-          </div>
+          </section>
           <div class="album-list">
             ${this._data.map((item, idx) => html`
-              <section>
+              <section class="album-item">
                 <div class="album-detail">
                   <p>${item.context.custom.year}</p>
                   <p>${item.context.custom.artist}</p>
@@ -135,16 +124,16 @@ class AljamAbout extends PageViewElement {
               </section>`)
             }
           </div>
-        </div>
+        </section>
         ${this._toggleCover ? html`
           <div id="modal-album">
             <button class="btn-close" @click="${() => (this._toggleCover = false)}">${closeIcon}</button>
             <button class="btn-previous" @click="${() => this._index == 0 ? (this._index = this._data.length - 1) : this._index--}">Previous</button>
             <button class="btn-next" @click="${() => this._index == this._data.length - 1 ? (this._index = 0) : this._index++}">Next</button>
-            <div class="modal">
+            <section class="modal">
                 <img class="modal-img" src="${url}${this._data[this._index].public_id}.jpg"/>
                 <img class="modal-img" src="${url}${this._data[this._index].public_id.slice(0,-6)}-back.jpg"/>
-            </div>
+            </section>
           </div>` : html``
         }`
       :html`

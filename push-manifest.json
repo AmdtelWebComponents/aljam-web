@@ -96,19 +96,5 @@
       "type": "script",
       "weight": 1
     }
-  },
-  "/links": {
-    "src/components/aljam-app.js": {
-      "type": "script",
-      "weight": 1
-    },
-    "src/components/aljam-links.js": {
-      "type": "script",
-      "weight": 1
-    },
-    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
-      "type": "script",
-      "weight": 1
-    }
   }
 }

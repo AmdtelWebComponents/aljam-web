@@ -17,14 +17,12 @@ class AljamHome extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          display: grid;
-          grid-auto-rows: 60vh;
           grid-gap: 5vh;
         }
-        section {
-          grid-template-columns: 1fr;
+        .item {
+          grid-template-rows: 60vh;
+          width: 100%;
         }
-
         .main-img {
           grid-column: 1/1;
           grid-row: 1/1;
@@ -32,38 +30,37 @@ class AljamHome extends PageViewElement {
           max-height: 100%;
           z-index: -1;
         }
-
         .main-img-logo {
           grid-column: 1/1;
           grid-row: 1/1;
           max-height: 20vh;
           max-width: 20vw;
         }
-
         .text-info {
           grid-column: 1/1;
           grid-row: 1/1;
           text-align: center;
-          font-size: 2em
+          font-size: 2em;
+          width: 50vw;
+          background: #000000C9;
+          border-radius: 50%;
         }
-
-        .text-info > p, h3 {
-          background: #00000090;
-        }
-
+        
         .icon-forward {
           width: 10vw;
           height: 10vh;
           fill: inherit;
         }
-        
         @media (min-width: 600px) {
           .layout {
             grid-auto-rows: 90vh;
-            grid-gap: 10vh;
+            grid-gap: 20vh;
           }
-          section {
+          .item {
             grid-template-columns: 1fr 3fr;
+          }
+          .text-info {
+            width: 30vw;
           }
           .main-img {
           grid-column: 2/2;
@@ -71,67 +68,58 @@ class AljamHome extends PageViewElement {
         }
       </style>
       ${this._data.length > 0? html`
-        <div class="layout">
-        <section id="main">
-          <img class="main-img-logo" src="${url}home/home-logo.png">
-          <img class="main-img" src="${url}${this._data[0].public_id}.jpg">
-        </section>
+        <section class="layout">
+          <section id="main" class="item">
+            <img class="main-img-logo" src="${url}home/home-logo.png">
+            <img class="main-img" src="${url}${this._data[0].public_id}.jpg">
+          </section>
 
-        <section id="discography" style="color: #ff0000; fill: #ff0000;">
-          <div class="text-info">
-            <h3>${this._data[1].context.custom.caption}</h3>
-            <p>${this._data[1].context.custom.alt}</p>
-            <a href="/about">${forward}</a>
-          </div>
-          <img class="main-img" src="${url}${this._data[1].public_id}.jpg">
-        </section>
+          <section id="discography" class="item" style="color: #ff0000; fill: #ff0000;">
+            <div class="text-info">
+              <h3>${this._data[1].context.custom.caption}</h3>
+              <p>${this._data[1].context.custom.alt}</p>
+              <a href="/about">${forward}</a>
+            </div>
+            <img class="main-img" src="${url}${this._data[1].public_id}.jpg">
+          </section>
 
-        <section id="music" style="color: #00ff00; fill: #00ff00">
-          <div class="text-info">
-            <h3>${this._data[2].context.custom.caption}</h3>
-            <p>${this._data[2].context.custom.alt}</p>
-            <a href="/music">${forward}</a>
-          </div>
-          <img class="main-img" src="${url}${this._data[2].public_id}.jpg">
-        </section>
+          <section id="music" class="item" style="color: #00ff00; fill: #00ff00">
+            <div class="text-info">
+              <h3>${this._data[2].context.custom.caption}</h3>
+              <p>${this._data[2].context.custom.alt}</p>
+              <a href="/music">${forward}</a>
+            </div>
+            <img class="main-img" src="${url}${this._data[2].public_id}.jpg">
+          </section>
 
-        <section id="gallery" style="color: #4a86e8; fill: #4a86e8">
-          <div class="text-info">
-            <h3>${this._data[3].context.custom.caption}</h3>
-            <p>${this._data[3].context.custom.alt}</p>
-            <a href="/art">${forward}</a>
-          </div>
-          <img class="main-img" src="${url}${this._data[3].public_id}.jpg">
-        </section>
+          <section id="gallery" class="item" style="color: #4a86e8; fill: #4a86e8">
+            <div class="text-info">
+              <h3>${this._data[3].context.custom.caption}</h3>
+              <p>${this._data[3].context.custom.alt}</p>
+              <a href="/art">${forward}</a>
+            </div>
+            <img class="main-img" src="${url}${this._data[3].public_id}.jpg">
+          </section>
 
-        <section id="contact" style="color: #9900ff; fill: #9900ff">
-          <div class="text-info">
-            <h3>${this._data[4].context.custom.caption}</h3>
-            <p>${this._data[4].context.custom.alt}</p>
-            <p>${this._data[4].context.custom.email}</p>
-            <a href="/contact">${forward}</a>
-          </div>
-          <img class="main-img" src="${url}${this._data[4].public_id}.jpg">
-        </section>
+          <section id="contact" class="item" style="color: #9900ff; fill: #9900ff">
+            <div class="text-info">
+              <h3>${this._data[4].context.custom.caption}</h3>
+              <p>${this._data[4].context.custom.alt}</p>
+              <p>${this._data[4].context.custom.email}</p>
+              <a href="/contact">${forward}</a>
+            </div>
+            <img class="main-img" src="${url}${this._data[4].public_id}.jpg">
+          </section>
 
-        <section id="snaps" style="color: #ff9900; fill: #ff9900">
-          <div class="text-info">
-            <h3>${this._data[5].context.custom.caption}</h3>
-            <p>${this._data[5].context.custom.alt}</p>
-            <a href="/snaps">${forward}</a>
-          </div>
-          <img class="main-img" src="${url}${this._data[5].public_id}.jpg">
+          <section id="snaps" class="item" style="color: #ff9900; fill: #ff9900">
+            <div class="text-info">
+              <h3>${this._data[5].context.custom.caption}</h3>
+              <p>${this._data[5].context.custom.alt}</p>
+              <a href="/snaps">${forward}</a>
+            </div>
+            <img class="main-img" src="${url}${this._data[5].public_id}.jpg">
+          </section>
         </section>
-
-        <section id="links" style="color: #f1c232; fill: #f1c232">
-          <div class="text-info">
-            <h3>${this._data[6].context.custom.caption}</h3>
-            <p>${this._data[6].context.custom.alt}</p>
-            <a href="/links">${forward}</a>
-          </div>
-          <img class="main-img" src="${url}${this._data[6].public_id}.jpg">
-        </section>
-        </div>
         `
       :html`
         <div class="loader">
