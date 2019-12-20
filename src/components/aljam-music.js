@@ -18,27 +18,23 @@ class AljamMusic extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          display: grid;
           grid-template-rows: 20vh 70vh;
-          grid-template-areas:
-            "info-text"
-            "albums";
           overflow-y: auto;
         }
         .info-text {
-          grid-area: info-text;
-          grid-template-columns: 1fr 4fr;
+          grid-template-columns: 20vw 80vw;
           color: #00ff00;
-          font-size: 1.4em;
+          font-size: 1.5em;
           text-align: center;
         }
         .logo {
-          max-height: 90%;
-          max-width: 90%;
+          max-height: 10vh;
         }
         .albums {
-          grid-area: albums;
+          height: 70vh;
+          width: 100vw;
           grid-auto-flow: row;
+          overflow-y: auto;
         }
         .albums button {
           position: unset;
@@ -72,7 +68,7 @@ class AljamMusic extends PageViewElement {
       
       ${this._data.length > 0? html`
       ${this._chooser ? html`
-      <div class="layout">
+      <section class="layout">
         <section class="info-text">
           <img class="logo" src="${url}music/music-logo.png">
           <div>
@@ -89,7 +85,7 @@ class AljamMusic extends PageViewElement {
             </button>
           `)}
         </section>
-        </div>`
+      </section>`
       :html`
         <section class="scwidget">
           <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true"></iframe>

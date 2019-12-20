@@ -18,10 +18,7 @@ class AljamSnaps extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          display: grid;
           grid-template-rows: 15vh 60vh 15vh;
-          align-items: center;
-          justify-items: center;
         }
         .info-text {
           padding: 10px;
@@ -67,7 +64,7 @@ class AljamSnaps extends PageViewElement {
         }
       </style>
       ${this._data.length > 0? html`
-        <div class="layout">
+        <section class="layout">
           <div class="info-text">
             <img src="${url}snaps/snaps-logo.png">
             <h3>${this._data[this._index].context.custom.caption}</h3>
@@ -83,7 +80,7 @@ class AljamSnaps extends PageViewElement {
               >`)
             }
           </div>
-        </div>`
+        </section>`
       :html`
         <div class="loader">
           <img class="spinner" src="${url}home/logo-transparent.png">
