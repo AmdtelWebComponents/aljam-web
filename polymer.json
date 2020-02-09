@@ -8,7 +8,7 @@
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
     "push-manifest.json",
-    "albums.json",
+    "fonts/*.*",
     "scwapi.js",
     "live-music.json"
   ],
