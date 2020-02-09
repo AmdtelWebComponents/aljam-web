@@ -9,7 +9,8 @@
     "node_modules/@webcomponents/webcomponentsjs/**",
     "push-manifest.json",
     "fonts/*.*",
-    "scwapi.js"
+    "scwapi.js",
+    "live-music.json"
   ],
   "builds": [
     {
