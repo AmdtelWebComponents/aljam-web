@@ -49,7 +49,7 @@ class AljamSnaps extends PageViewElement {
           max-height: 60vh;
           max-width: 96vw;
         }
-        @media (min-width: 600px) {
+        @media (orientation: landscape) {
           .layout {
             grid-template-columns: 20vw 80vw;
             grid-template-rows: 70vh 20vh;

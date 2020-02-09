@@ -30,7 +30,7 @@ class AljamContact extends PageViewElement {
         .logo {
           max-height: 10vh;
         }
-        @media (min-width: 600px) {
+        @media (orientation: landscape) {
           .layout {
             grid-template-columns: 1fr 3fr;
             grid-template-rows: 90vh;

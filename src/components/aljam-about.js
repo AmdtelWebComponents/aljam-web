@@ -81,7 +81,7 @@ class AljamAbout extends PageViewElement {
             max-height: 100%
         }
         
-        @media (min-width: 600px) {
+        @media (orientation: landscape) {
           .layout {
             grid-template-columns: 2fr 3fr;
             grid-template-rows: 90vh;

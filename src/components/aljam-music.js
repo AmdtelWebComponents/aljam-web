@@ -56,7 +56,7 @@ class AljamMusic extends PageViewElement {
           top: 1em;
           right: 1em;
         }
-        @media (min-width: 600px) {
+        @media (orientation: landscape) {
           .albums {
             grid-auto-flow: column;
           }
