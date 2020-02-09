@@ -13,14 +13,11 @@ import { html } from 'lit-element';
 export const SharedStyles = html`
 <style>
   :host {
-    display: block;
     box-sizing: border-box;
-    background: #000000;
   }
   
   section {
     display: grid;
-    height: 80vh;
     align-items: center;
     justify-items: center;
   }

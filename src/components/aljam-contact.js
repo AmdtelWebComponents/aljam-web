@@ -14,41 +14,45 @@ class AljamContact extends PageViewElement {
     return html `
       ${SharedStyles}
       <style>
-        :host {
-          background: black;
-          color: white;
-        }
-        section {
-          grid-template-columns: 1fr 3fr;
+        .layout {
+          grid-template-rows: 20vh 70vh;
         }
         .info-text {
-          padding: 10px;
-          background-color: black;
+          grid-template-columns: 1fr 4fr;
           color: #9900ff;
-          font-size: 2vw;
+          font-size: 1.5em;
           text-align: center;
         }
-        section img {
+        .main-img {
           max-width: 60vw;
           max-height: 70vh;
         }
-        @media (max-width: 459px) {
-          section {
+        .logo {
+          max-height: 10vh;
+        }
+        @media (orientation: landscape) {
+          .layout {
+            grid-template-columns: 1fr 3fr;
+            grid-template-rows: 90vh;
+          }
+          .info-text {
             grid-template-columns: 1fr;
-            grid-template-rows: 2fr 1fr;
+            grid-template-rows: 1fr 3fr;
           }
         }
       </style>
 
     ${this._data.length > 0? html`
-      <section>
-        <div class="info-text">
-          <img src="${url}t_album200x200/contact/contact-logo.jpg">
-          <h3>${this._data[0].context.custom.caption}</h3>
-          <p>${this._data[0].context.custom.alt}</p>
-          <p>${this._data[0].context.custom.email}</p>
-        </div>
-        <img src="${url}${this._data[0].public_id}.jpeg">
+      <section class="layout">
+        <section class="info-text">
+          <img class="logo" src="${url}contact/contact-logo.png">
+          <div>
+            <h3>${this._data[0].context.custom.caption}</h3>
+            <p>${this._data[0].context.custom.alt}</p>
+            <p>${this._data[0].context.custom.email}</p>
+          </div>
+        </section>
+        <img class="main-img" src="${url}${this._data[0].public_id}.jpeg">
       </section>`
     : html`
        <div class="loader">
