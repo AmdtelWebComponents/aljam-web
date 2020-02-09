@@ -158,10 +158,10 @@ class AljamApp extends connect(store)(LitElement) {
 
         /* Wide layout: when the viewport width is bigger than 600px, layout
         changes to a wide layout */
-        @media (min-width: 600px) {
+        @media (orientation: landscape) {
           .toolbar-list {
             display: block;
-            font-size: 8vh;
+            font-size: 5vw;
           }
           .menu-btn {
             display: none;

@@ -1,0 +1,25 @@
+[
+  {"date": "Saturday 29th February",
+    "acts": [
+      {"artist": "The I V Drips","description": "Three harmonious heroes of the borders paramedic profession serenade us with the healing power of pop & rock masterpieces"},
+      {"artist": "The Band Saw","description": "Powerhouse band of local jammers featuring Angie Lyall (vocals)"},
+      {"artist": "The New Tang", "description": "A hot new original line-up with funk and reggae styles featuring Jose de las Heras (bass) and Jacob Myers (trumpet)"}
+    ]
+  },
+  {"date": "Friday 27th March",
+    "acts":[
+      {"artist": "Pillarbox Swing","description": "Timeless classics and sweet surprises featuring Sue Bremner (vocals) and Al James (guitar & Vocals)"},
+      {"artist": "The Band Saw", "description": "Powerhouse band of local jammers featuring Angie Lyall (vocals)"},
+      {"artist": "Rubizakan", "description": "World groves and blistering beats drive fabulous original songs from these local troubadours featuring Steve Taylor(vocals)"},
+      {"artist": "Hell Bucket", "description": "Heavenly hoe-down hootin' and a-hollerin' hilarity with Dave Holyoak, Barny Maddox and Dane Ashby"}
+      
+    ]
+  },
+  {"date": "Friday 1st May",
+    "acts": [
+      {"artist": "Yon Fogerty", "description": "The clearly credible Credence Clearwater Revival tribute band featuring Neil MacLeod(vocals & guitar)"},
+      {"artist": "The Band Saw", "description": "Powerhouse band of local jammers featuring Angie Lyall (vocals)"},
+      {"artist": "Diamond Eyed Jacks", "description": "Grateful Dead tribute band featuring Dougie James on keyboards"}
+    ]
+  }
+]
