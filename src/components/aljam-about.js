@@ -18,9 +18,9 @@ class AljamAbout extends PageViewElement {
     return html`
       ${SharedStyles}
       <style>
-        .layout {
-          grid-template-rows: 20vh 70vh;
-          font-size: 1.5em;
+        .album-list {
+          height: 90vh;
+          overflow-y: scroll;
         }
         .album-item {
           grid-gap: 0.2em;
@@ -34,18 +34,6 @@ class AljamAbout extends PageViewElement {
         .album-item:nth-of-type(even) {
           background: white;
           color: black;
-        }
-        .logo {
-          max-height: 10vh;
-        }
-        .info-text {
-          grid-template-columns: 1fr 3fr;
-          color: red;
-          text-align: center;
-        }
-        .album-list {
-          height: 70vh;
-          overflow-y: scroll;
         }
         .album-detail {
           grid-area: album-detail;
@@ -86,16 +74,12 @@ class AljamAbout extends PageViewElement {
             grid-template-columns: 2fr 3fr;
             grid-template-rows: 90vh;
           }
-          .info-text {
-            grid-template-columns: 1fr;
-            grid-template-rows: 20vh;
+          .album-list {
+            height: 90vh;
           }
           .album-item {
             grid-template-columns: repeat(4, 1fr);
             grid-template-areas: "album-detail album-detail album-cover-front album-cover-back";
-          }
-          .album-list {
-            height: 90vh;
           }
           .modal {
           grid-template-columns: repeat(2, 1fr);
@@ -103,28 +87,19 @@ class AljamAbout extends PageViewElement {
         }
       </style>
       ${this._data.length > 0 ? html`
-        <section class="layout">
-          <section class="info-text">
-            <img class="logo" src="${url}discography/discography-logo.png"/>
-            <div>
-              <h3>${this._logoData[0].context.custom.caption}</h3>
-              <p>${this._logoData[0].context.custom.alt}</p>
-            </div>
-          </section>
-          <div class="album-list">
-            ${this._data.map((item, idx) => html`
-              <section class="album-item">
-                <div class="album-detail">
-                  <p>${item.context.custom.year}</p>
-                  <p>${item.context.custom.artist}</p>
-                  <p>${item.context.custom.caption}</p>
-                </div>
-                <img class="album-img front" src="${url}t_album200x200/${item.public_id}.jpg" @click="${e => {this._index = idx;this._toggleCover = true;}}"/>
-                <img class="album-img back" src="${url}t_album200x200/${item.public_id.slice(0, -6)}-back.jpg"/>
-              </section>`)
-            }
-          </div>
-        </section>
+        <div class="album-list">
+          ${this._data.map((item, idx) => html`
+            <section class="album-item">
+              <div class="album-detail">
+                <p>${item.context.custom.year}</p>
+                <p>${item.context.custom.artist}</p>
+                <p>${item.context.custom.caption}</p>
+              </div>
+              <img class="album-img front" src="${url}t_album200x200/${item.public_id}.jpg" @click="${e => {this._index = idx;this._toggleCover = true;}}"/>
+              <img class="album-img back" src="${url}t_album200x200/${item.public_id.slice(0, -6)}-back.jpg"/>
+            </section>`)
+          }
+        </div>
         ${this._toggleCover ? html`
           <div id="modal-album">
             <button class="btn-close" @click="${() => (this._toggleCover = false)}">${closeIcon}</button>
