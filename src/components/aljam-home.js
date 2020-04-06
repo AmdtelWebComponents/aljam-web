@@ -18,65 +18,41 @@ class AljamHome extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          color: white;
-          grid-gap: 2vh;
+          display: flex;
+          justify-content: flex-end;
+          margin: 0em 2em 0em 2em;
+          background-image: url("https://res.cloudinary.com/aljames/image/upload/home/ALJAM_home_page_post_pic_only.jpg");
+          background-repeat: no-repeat;
+          background-position: left;
+          background-size: contain;
         }
-        .events {
-          grid-gap: 2vh;
+        p {
+          width: 60vw;
+          height: 90vh;
+          font-size: 1.5em;
+          font-weight: bold;
+          text-align: right;
+          padding-right: 1em;
+          background: -webkit-linear-gradient(#f00, #0f0);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
-        .header {
-          text-align: center;
+        img {
+          min-height: 90vh;
+          min-width: 90vh;
         }
-        .lineup {
-          grid-gap: 0.3em;
-          font-size: 1.3em;
-          line-height: 0.8em;
-          background: green;
-          border-radius: 1em;
-          padding: 0.5em;
-        }
-        .text-info {
-          text-align: center;
-          width: 90vw;
-          background: beige;
-          color: black;
-          border-radius: 1em;
-          padding: 0.5em;
-        }
-        h1, h2, h3, p {
-          margin: 0.5em;
-          padding: 0;
+
+        @media (orientation: landscape) {
+          .layout {
+            margin: 0em 6em 0em 6em;
+          }
+          p {
+            font-size: 1.4em;
+          }
         }
       </style>
-      ${this._data.length > 0? html`
-      <section class="layout">
-        <section class="header">
-          <section class="lineup">
-            <div class="text-info">
-              <h1>Live Music at the Wynd Bar</h1>
-              <p>marmions @ the wynd melrose</p>
-              <p>Three evenings of marvellous musical mayhem brought to you by aljam.co.uk</p>
-            </div>
-          </section>
-        </section>
-        <section class="events">
-          ${this._data.map((item, idx) => html`
-            <section class="lineup">
-            <h2>${item.date}</h2>
-              ${item.acts.map((act) => html`
-                  <div class="text-info">
-                    <h1>${act.artist}</h1>
-                    <p>${act.description}</p>
-                  </div>
-              `)}
-            <p>Admission: Please bring a foodbank donation</p>
-            <p>info@marmionsbrasserie.co.uk -- 01896 822245</p>
-            <section>
-          `)}
-        </section>
-      </section>
-        
-      `
+      ${this._data.length > 0 ? html`
+        <section class="layout"><p>think I lost my head<br>it was a close shave<br><br>feeling starved of action<br>too quiet for my liking<br>they calling it a lockdown<br>everybody hiding<br><br>til jamming time come round<br>time to do some back up<br>editing and mixing<br>so much needing fixing<br><br>time to try a new device<br>and try to make a movie<br>all these great tracks lying around<br>... gonna be groovy ...</p></section>`
       :html`
         <div class="loader">
           <img class="spinner" src="${url}home/logo-transparent.png">
