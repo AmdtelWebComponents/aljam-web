@@ -18,7 +18,7 @@ class AljamSnaps extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          grid-template-rows: 15vh 60vh 15vh;
+          grid-template-rows: 10vh 60vh 10vh;
         }
         .info-text {
           padding: 10px;
@@ -51,8 +51,8 @@ class AljamSnaps extends PageViewElement {
         }
         @media (orientation: landscape) {
           .layout {
-            grid-template-columns: 20vw 80vw;
-            grid-template-rows: 70vh 20vh;
+            grid-template-columns: 30vw 70vw;
+            grid-template-rows: 65vh 15vh;
           }
           .mainimg {
             max-height: 70vh;

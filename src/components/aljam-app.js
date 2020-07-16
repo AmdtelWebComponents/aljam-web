@@ -144,7 +144,7 @@ class AljamApp extends connect(store)(LitElement) {
         }
 
         .main-content {
-          height: 90vh;
+          height: 80vh;
           padding-top: 10vh;
         }
 
@@ -154,6 +154,26 @@ class AljamApp extends connect(store)(LitElement) {
 
         .page[active] {
           display: block;
+        }
+
+        footer {
+          color: white;
+          font-size: 1.6em;
+          background-color: black;
+          height: 10vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        footer>p {
+          margin: unset;
+        }
+        footer>p>a {
+          color: yellow;
+          text-decoration: none;
+        }
+        footer>p>a:visited {
+          color: white;
         }
 
         /* Wide layout: when the viewport width is bigger than 600px, layout
@@ -183,8 +203,8 @@ class AljamApp extends connect(store)(LitElement) {
         <nav class="toolbar-list">
           <a style="color: #ff0000;" ?selected="${this._page === 'about'}" href="/about">discography</a>
           <a style="color: #00ff00;" ?selected="${this._page === 'music'}" href="/music">music</a>
+          <a style="color: #9900ff;" ?selected="${this._page === 'contact'}" href="/contact">video</a>
           <a style="color: #4a86e8;" ?selected="${this._page === 'art'}" href="/art">gallery</a>
-          <a style="color: #9900ff;" ?selected="${this._page === 'contact'}" href="/contact">contact</a>
           <a style="color: #ff9900;" ?selected="${this._page === 'snaps'}" href="/snaps">snaps</a>
         </nav>
         </app-toolbar>
@@ -196,8 +216,8 @@ class AljamApp extends connect(store)(LitElement) {
         <nav class="drawer-list">
           <a style="color: #ff0000;" ?selected="${this._page === 'about'}" href="/about">discography</a>
           <a style="color: #00ff00;" ?selected="${this._page === 'music'}" href="/music">music</a>
+           <a style="color: #9900ff;" ?selected="${this._page === 'contact'}" href="/contact">video</a>
           <a style="color: #4a86e8;" ?selected="${this._page === 'art'}" href="/art">gallery</a>
-          <a style="color: #9900ff;" ?selected="${this._page === 'contact'}" href="/contact">Contact</a>
           <a style="color: #ff9900;" ?selected="${this._page === 'snaps'}" href="/snaps">snaps</a>
         </nav>
       </app-drawer>
@@ -211,9 +231,9 @@ class AljamApp extends connect(store)(LitElement) {
         <aljam-snaps class="page" ?active="${this._page === 'snaps'}"></aljam-snaps>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
-      <!-- <footer>
-        <p>Made with &hearts; by the Amdtel Webdev team.</p>
-      </footer> -->
+      <footer>
+        <p>Contact by email: <a href="mailto:aljam@aljames.co.uk">aljames@aljam.co.uk</a> or <a href="https://www.facebook.com/profile.php?id=100016168685446">Facebook</a></p>
+      </footer>
       <snack-bar ?active="${this._snackbarOpened}">You are now ${this._offline ? 'offline' : 'online'}.</snack-bar>
     `;
   }  

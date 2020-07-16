@@ -18,17 +18,8 @@ class AljamMusic extends PageViewElement {
       ${SharedStyles}
       <style>
         .layout {
-          grid-template-rows: 20vh 70vh;
+          height: 80vh;
           overflow-y: auto;
-        }
-        .info-text {
-          grid-template-columns: 20vw 80vw;
-          color: #00ff00;
-          font-size: 1.5em;
-          text-align: center;
-        }
-        .logo {
-          max-height: 10vh;
         }
         .albums {
           height: 70vh;
@@ -49,11 +40,11 @@ class AljamMusic extends PageViewElement {
           height: 100%;
         }
         .scwidget {
-          grid-template-rows: 80vh 10vh;
+          height: 80vh;
         }
         .chooserbtn {
-          position: unset;
-          top: 1em;
+          position: fixed;
+          bottom: 10.8vh;
           right: 1em;
         }
         @media (orientation: landscape) {
@@ -69,13 +60,6 @@ class AljamMusic extends PageViewElement {
       ${this._data.length > 0? html`
       ${this._chooser ? html`
       <section class="layout">
-        <section class="info-text">
-          <img class="logo" src="${url}music/music-logo.png">
-          <div>
-            <h3>Music</h3>
-            <p>three albums, click on a cover to listen in soundcloud...</p>
-          </div>
-        </section>
         <section class="albums">
           ${this._data.map((item) => html`
             <button @click="${(e) => {this._chooser=false; this._currentAlbum=item.context.custom.SCID} }" title="Play ${item.context.custom.caption}">
@@ -87,9 +71,9 @@ class AljamMusic extends PageViewElement {
         </section>
       </section>`
       :html`
+        <button class="chooserbtn" @click="${() => this._chooser=true}">Return to Albums</button>
         <section class="scwidget">
           <iframe scrolling="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${this._currentAlbum}&amp;color=%23005500&amp;show_playcount=true"></iframe>
-          <button class="chooserbtn" @click="${() => this._chooser=true}">Return to Albums</button>
         </section>`
       }`
       :html`
