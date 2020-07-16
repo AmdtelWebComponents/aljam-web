@@ -3,7 +3,6 @@ import { PageViewElement } from './page-view-element.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
-import { forward, backward } from './aljam-icons.js';
 
 class AljamHome extends PageViewElement {
   static get properties() {
@@ -28,18 +27,15 @@ class AljamHome extends PageViewElement {
         }
         p {
           width: 60vw;
-          height: 90vh;
+          height: 70vh;
           font-size: 1.5em;
           font-weight: bold;
           text-align: right;
           padding-right: 1em;
           background: -webkit-linear-gradient(#f00, #0f0);
+          background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-        }
-        img {
-          min-height: 90vh;
-          min-width: 90vh;
         }
 
         @media (orientation: landscape) {
@@ -47,7 +43,7 @@ class AljamHome extends PageViewElement {
             margin: 0em 6em 0em 6em;
           }
           p {
-            font-size: 1.4em;
+            font-size: 1.3em;
           }
         }
       </style>

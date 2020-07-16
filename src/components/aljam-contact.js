@@ -10,69 +10,26 @@ class AljamContact extends PageViewElement {
       _data: { type: Array },
     };
   }
-  render(url="https://res.cloudinary.com/aljames/image/upload/") {
+  
+  render() {
     return html `
       ${SharedStyles}
       <style>
         .layout {
-          grid-template-rows: 20vh 70vh;
-        }
-        .info-text {
-          grid-template-columns: 1fr 4fr;
-          color: #9900ff;
-          font-size: 1.5em;
-          text-align: center;
-        }
-        .main-img {
-          max-width: 60vw;
-          max-height: 70vh;
-        }
-        .logo {
-          max-height: 10vh;
+          height: 80vh;
         }
         @media (orientation: landscape) {
           .layout {
-            grid-template-columns: 1fr 3fr;
-            grid-template-rows: 90vh;
-          }
-          .info-text {
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr 3fr;
+            grid-template-rows: 80vh;
           }
         }
       </style>
 
-    ${this._data.length > 0? html`
       <section class="layout">
-        <section class="info-text">
-          <img class="logo" src="${url}contact/contact-logo.png">
-          <div>
-            <h3>${this._data[0].context.custom.caption}</h3>
-            <p>${this._data[0].context.custom.alt}</p>
-            <p>${this._data[0].context.custom.email}</p>
-          </div>
-        </section>
-        <img class="main-img" src="${url}${this._data[0].public_id}.jpeg">
-      </section>`
-    : html`
-       <div class="loader">
-         <img class="spinner" src="${url}home/logo-transparent.png">
-         <p>loading...</p>
-       </div>`
-    }`;
-  }
-
-  constructor() {
-    super();
-    this._data = [];
-    this._contactData = [];
-  }
-
-  firstUpdated() {
-    fetch('https://res.cloudinary.com/aljames/image/list/contact-image.json')
-    .then(r => r.json())
-    .then(data => this._data = data.resources)
-    .catch(e => console.log("fetch error:", e));
+        <iframe id="player" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/sYchEGYlrhQ?enablejsapi=1&origin=https://dev-aljam-web.glitch.me" frameborder="0"></iframe>
+        
+      </section>
+      `;
   }
 }
 

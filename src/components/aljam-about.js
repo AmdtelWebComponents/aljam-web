@@ -19,7 +19,8 @@ class AljamAbout extends PageViewElement {
       ${SharedStyles}
       <style>
         .album-list {
-          height: 90vh;
+          height: 80vh;
+          font-size: 1.3em;
           overflow-y: scroll;
         }
         .album-item {
@@ -70,12 +71,9 @@ class AljamAbout extends PageViewElement {
         }
         
         @media (orientation: landscape) {
-          .layout {
-            grid-template-columns: 2fr 3fr;
-            grid-template-rows: 90vh;
-          }
           .album-list {
-            height: 90vh;
+            height: 80vh;
+            font-size: 1.6em;
           }
           .album-item {
             grid-template-columns: repeat(4, 1fr);
