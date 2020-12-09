@@ -20,12 +20,13 @@ class AljamHome extends PageViewElement {
           display: flex;
           justify-content: flex-end;
           margin: 0em 2em 0em 2em;
-          background-image: url("https://res.cloudinary.com/aljames/image/upload/home/ALJAM_home_page_post_pic_only.jpg");
+          background-image: url("https://res.cloudinary.com/aljames/image/upload/home/Darkest_Day_1.jpg");
           background-repeat: no-repeat;
           background-position: left;
           background-size: contain;
         }
         p {
+          display: contents;
           width: 60vw;
           height: 70vh;
           font-size: 1.5em;

@@ -26,7 +26,8 @@ class AljamContact extends PageViewElement {
       </style>
 
       <section class="layout">
-        <iframe id="player" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/sYchEGYlrhQ?enablejsapi=1&origin=https://dev-aljam-web.glitch.me" frameborder="0"></iframe>
+        <!-- <iframe id="player" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/sYchEGYlrhQ?enablejsapi=1&origin=https://dev-aljam-web.glitch.me" frameborder="0"></iframe> -->
+        <iframe id="player" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/videoseries?list=UUHd8xPpHTVZ97VwDeFVcTeg" frameborder="0" allowfullscreen></iframe>
         
       </section>
       `;
